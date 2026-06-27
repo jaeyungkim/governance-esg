@@ -3,559 +3,685 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Governance Factors in ESG Investing</title>
+<title>Governance Factors in ESG Investing — lecture</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --paper:#0c1116; --paper-2:#10171e; --panel:#15202a;
-  --ink:#ece6d8; --ink-soft:#b6b1a4; --ink-faint:#7a8593;
-  --rule:rgba(236,230,216,.13); --rule-strong:rgba(236,230,216,.26);
-  --gold:#e0a93f; --teal:#5fb0d6; --green:#74c79e; --coral:#e58468; --violet:#b3a4e0;
-  --predict:var(--gold); --discuss:var(--violet); --evidence:var(--teal); --verdict:var(--green);
+  --bg:#0b0f14; --bg2:#0e141b; --panel:#131c25;
+  --ink:#efe9dc; --ink-soft:#b9b3a6; --ink-faint:#79838f;
+  --rule:rgba(239,233,220,.12); --rule-2:rgba(239,233,220,.22);
+  --gold:#e3ad45; --teal:#62b4da; --green:#76cca2; --coral:#e88a6e; --violet:#b6a7e4;
   --display:"Fraunces",Georgia,serif; --body:"Newsreader",Georgia,serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
-  --col:760px;
+  --col:46rem;
 }
 *{box-sizing:border-box;margin:0;padding:0}
 html{scroll-behavior:smooth}
-body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:20px;line-height:1.65;
+body{background:var(--bg);color:var(--ink);font-family:var(--body);font-size:21px;line-height:1.62;font-weight:340;
   -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;overflow-x:hidden;
-  background-image:radial-gradient(120% 80% at 50% -5%,#121b24 0%,#0c1116 55%);background-attachment:fixed}
-body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.03;
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
-a{color:var(--teal);text-decoration:none}
+  background-image:radial-gradient(125% 70% at 50% -8%,#13202b 0%,#0b0f14 52%);background-attachment:fixed}
+body::after{content:"";position:fixed;inset:0;pointer-events:none;z-index:1;opacity:.025;mix-blend-mode:overlay;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")}
+::selection{background:rgba(227,173,69,.28);color:#fff}
 
-/* progress + chrome */
-#progress{position:fixed;top:0;left:0;height:3px;width:0;z-index:50;
-  background:linear-gradient(90deg,var(--gold),var(--teal));transition:width .15s linear}
-#edition{position:fixed;top:16px;right:18px;z-index:50;font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;
-  text-transform:uppercase;color:var(--ink-faint);border:1px solid var(--rule);padding:5px 10px;border-radius:2px;background:rgba(12,17,22,.7);backdrop-filter:blur(6px)}
+/* chrome */
+#prog{position:fixed;top:0;left:0;height:2px;width:0;z-index:60;background:linear-gradient(90deg,var(--gold),var(--teal))}
+#ed{position:fixed;top:15px;right:18px;z-index:60;font-family:var(--mono);font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+  color:var(--ink-faint);border:1px solid var(--rule);padding:5px 11px;border-radius:30px;background:rgba(11,15,20,.6);backdrop-filter:blur(8px)}
+#dots{position:fixed;top:50%;right:20px;transform:translateY(-50%);z-index:50;display:flex;flex-direction:column;gap:14px;align-items:flex-end}
+#dots a{display:flex;align-items:center;gap:10px;font-family:var(--mono);font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--ink-faint);transition:.3s}
+#dots a .t{opacity:0;transform:translateX(6px);transition:.3s;white-space:nowrap}
+#dots a .p{width:22px;height:1px;background:var(--rule-2);transition:.3s}
+#dots a:hover .t,#dots a.on .t{opacity:1;transform:none;color:var(--ink)}
+#dots a.on .p{width:34px;background:var(--gold)}
+@media(max-width:1100px){#dots{display:none}}
 
-/* TOC */
-#toc{position:fixed;top:50%;left:22px;transform:translateY(-50%);z-index:40;display:flex;flex-direction:column;gap:13px}
-#toc a{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);
-  display:flex;align-items:center;gap:9px;transition:.25s}
-#toc a .pip{width:18px;height:1px;background:var(--rule-strong);transition:.25s}
-#toc a .lbl{opacity:0;transform:translateX(-4px);transition:.25s;white-space:nowrap}
-#toc a:hover .lbl,#toc a.on .lbl{opacity:1;transform:none}
-#toc a:hover,#toc a.on{color:var(--ink)}
-#toc a.on .pip{width:30px;background:var(--gold)}
-@media (max-width:1200px){#toc{display:none}}
+/* generic scroll-reveal */
+.fx{opacity:0;transform:translateY(30px);transition:opacity 1s cubic-bezier(.16,.7,.2,1),transform 1s cubic-bezier(.16,.7,.2,1)}
+.fx.in{opacity:1;transform:none}
+.fx.d1{transition-delay:.08s}.fx.d2{transition-delay:.16s}.fx.d3{transition-delay:.24s}.fx.d4{transition-delay:.32s}.fx.d5{transition-delay:.4s}
 
-/* hero */
-#hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;position:relative;
-  padding:0 8vw;z-index:2}
-#hero .meta{font-family:var(--mono);font-size:13px;letter-spacing:.34em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:28px}
-#hero h1{font-family:var(--display);font-weight:600;font-size:clamp(44px,8vw,104px);line-height:.97;letter-spacing:-.022em;max-width:15ch}
-#hero h1 em{font-style:italic;color:var(--gold);font-weight:500}
-#hero .sub{font-size:clamp(19px,2.4vw,27px);color:var(--ink-soft);margin-top:28px;font-style:italic;font-weight:300;max-width:40ch;line-height:1.4}
-#hero .rule{width:90px;height:2px;background:var(--gold);margin:38px 0 24px}
-#hero .by{font-family:var(--mono);font-size:14px;letter-spacing:.05em;color:var(--ink-soft)}
-#hero .by b{color:var(--ink);font-weight:600}
-#hero .bignum{position:absolute;right:2vw;bottom:-4vw;font-family:var(--display);font-weight:300;font-style:italic;
-  font-size:46vw;line-height:1;color:rgba(236,230,216,.022);z-index:-1;pointer-events:none}
-.scrollcue{position:absolute;bottom:30px;left:8vw;font-family:var(--mono);font-size:11px;letter-spacing:.2em;
-  text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:10px;animation:bob 2.4s ease-in-out infinite}
-.scrollcue .arr{width:1px;height:28px;background:linear-gradient(var(--gold),transparent)}
-@keyframes bob{0%,100%{transform:translateY(0);opacity:.7}50%{transform:translateY(6px);opacity:1}}
+/* ===== HERO ===== */
+.hero{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:0 8vw;position:relative;z-index:2}
+.hero .kick{font-family:var(--mono);font-size:12px;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);margin-bottom:34px}
+.hero h1{font-family:var(--display);font-weight:560;font-size:clamp(46px,9vw,118px);line-height:.95;letter-spacing:-.025em;max-width:14ch}
+.hero h1 em{font-style:italic;color:var(--gold);font-weight:460}
+.hero .sub{font-family:var(--display);font-weight:300;font-style:italic;font-size:clamp(20px,2.8vw,30px);color:var(--ink-soft);margin-top:30px;max-width:30ch;line-height:1.32}
+.hero .by{font-family:var(--mono);font-size:13px;letter-spacing:.05em;color:var(--ink-soft);margin-top:42px;padding-top:22px;border-top:1px solid var(--rule);display:flex;gap:24px;flex-wrap:wrap}
+.hero .by b{color:var(--ink);font-weight:600}
+.hero .ghost{position:absolute;right:3vw;bottom:-7vw;font-family:var(--display);font-weight:300;font-style:italic;font-size:50vw;line-height:1;color:rgba(239,233,220,.018);z-index:-1;pointer-events:none;user-select:none}
+.cue{position:absolute;bottom:32px;left:8vw;font-family:var(--mono);font-size:10.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--ink-faint);display:flex;align-items:center;gap:11px}
+.cue .a{width:1px;height:30px;background:linear-gradient(var(--gold),transparent);animation:bob 2.4s ease-in-out infinite}
+@keyframes bob{0%,100%{opacity:.5;transform:translateY(0)}50%{opacity:1;transform:translateY(7px)}}
 
-/* document flow */
-main{position:relative;z-index:2;padding-bottom:10vh}
-.wrap{max-width:var(--col);margin:0 auto;padding:0 26px}
-.unit{max-width:var(--col);margin:0 auto;padding:30px 26px}
-.fx{opacity:0;transform:translateY(26px);transition:opacity .8s cubic-bezier(.2,.7,.2,1),transform .8s cubic-bezier(.2,.7,.2,1)}
-.fx.shown{opacity:1;transform:none}
+main{position:relative;z-index:2;padding-bottom:14vh}
+.col{max-width:var(--col);margin:0 auto;padding:0 26px}
 
-/* stage label */
-.stage{font-family:var(--mono);font-size:12px;letter-spacing:.22em;text-transform:uppercase;display:flex;align-items:center;gap:12px;margin-bottom:16px;color:var(--ink-faint)}
-.stage .tag{font-weight:600;padding:4px 10px 3px;border-radius:2px;color:#0c1116;font-size:11px;letter-spacing:.2em}
-.stage.predict .tag{background:var(--predict)} .stage.discuss .tag{background:var(--discuss)}
-.stage.evidence .tag{background:var(--evidence)} .stage.verdict .tag{background:var(--verdict)}
-.stage .arc{color:var(--ink-soft)}
-.stage .ln{flex:1;height:1px;background:var(--rule)}
+/* ===== PART DIVIDER ===== */
+.part{min-height:62vh;display:flex;flex-direction:column;justify-content:center;padding:14vh 8vw 8vh;position:relative}
+.part .pn{font-family:var(--mono);font-size:12.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:20px}
+.part h2{font-family:var(--display);font-weight:540;font-size:clamp(34px,6vw,68px);line-height:1.02;letter-spacing:-.02em;max-width:18ch}
+.part h2 em{font-style:italic;color:var(--gold);font-weight:440}
+.part .pl{font-size:clamp(19px,2.2vw,24px);color:var(--ink-soft);margin-top:24px;max-width:42ch;font-weight:300;line-height:1.45}
+.part .pbig{position:absolute;right:6vw;top:50%;transform:translateY(-50%);font-family:var(--display);font-weight:300;font-size:32vh;line-height:1;color:rgba(239,233,220,.03);pointer-events:none}
 
-h2.u-title,h3.u-title{font-family:var(--display);font-weight:560;letter-spacing:-.012em;color:var(--ink);line-height:1.1}
-h2.u-title{font-size:clamp(28px,4vw,40px);max-width:20ch}
-h3.u-title{font-size:clamp(25px,3.2vw,33px);max-width:22ch}
-.u-title em{font-style:italic;color:var(--gold);font-weight:460}
-.u-lead{font-size:clamp(20px,2.3vw,24px);color:var(--ink-soft);margin-top:16px;font-weight:300;line-height:1.45}
-.u-lead strong{color:var(--ink);font-weight:560}
-.u-body{margin-top:18px;color:var(--ink-soft)}
-.u-body p+p{margin-top:14px}
-strong{color:var(--ink);font-weight:600} em{font-style:italic}
-.hl{color:var(--gold);font-style:normal}.hl-t{color:var(--teal)}.hl-g{color:var(--green)}.hl-c{color:var(--coral)}
-.mono{font-family:var(--mono);font-size:.82em}
+/* ===== SCENE (a content beat) ===== */
+.scene{padding:11vh 0}
+.scene.tight{padding:6vh 0}
+.stage{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;display:flex;align-items:center;gap:13px;margin-bottom:22px;color:var(--ink-faint)}
+.stage .tag{font-weight:600;padding:4px 11px 3px;border-radius:30px;color:#0b0f14;font-size:10.5px;letter-spacing:.16em}
+.stage.predict .tag{background:var(--gold)}.stage.evidence .tag{background:var(--teal)}.stage.verdict .tag{background:var(--green)}.stage.idea .tag{background:var(--violet)}
+.stage .arc{color:var(--ink-soft)}.stage .ln{flex:1;height:1px;background:var(--rule)}
 
-/* two-col body for evidence (text + figure) */
-.unit.has-fig .u-wrap{display:grid;grid-template-columns:1fr;gap:30px;align-items:center}
-@media(min-width:900px){.unit.has-fig{max-width:1040px}.unit.has-fig .u-wrap{grid-template-columns:1fr 1fr;gap:48px}
-  .unit.has-fig.figleft .fig{order:-1}}
+h3.head{font-family:var(--display);font-weight:540;font-size:clamp(27px,3.8vw,42px);line-height:1.08;letter-spacing:-.015em;max-width:20ch}
+h3.head em{font-style:italic;color:var(--gold);font-weight:440}
+.lede{font-size:clamp(21px,2.4vw,26px);line-height:1.45;color:var(--ink);font-weight:340;margin-top:6px}
+p{margin-top:22px;color:var(--ink-soft)}
+p.body{color:var(--ink-soft)}
+.scene strong,p strong{color:var(--ink);font-weight:600}em{font-style:italic}
+.hl{color:var(--gold);font-weight:500}.hl-t{color:var(--teal);font-weight:500}.hl-g{color:var(--green);font-weight:500}.hl-c{color:var(--coral);font-weight:500}
+.mono{font-family:var(--mono);font-size:.84em}
+.cite{font-family:var(--mono);font-size:.66em;color:var(--ink-faint);letter-spacing:.02em;white-space:nowrap}
 
-ul.clean{list-style:none;display:flex;flex-direction:column;gap:12px;margin-top:6px}
-ul.clean li{position:relative;padding-left:26px;line-height:1.4}
-ul.clean li::before{content:"";position:absolute;left:0;top:.6em;width:8px;height:8px;border:1.5px solid var(--gold);transform:rotate(45deg)}
-ul.clean li.t::before{border-color:var(--teal)}ul.clean li.g::before{border-color:var(--green)}ul.clean li.c::before{border-color:var(--coral)}
-.two-col{display:grid;grid-template-columns:1fr;gap:26px}@media(min-width:680px){.two-col{grid-template-columns:1fr 1fr;gap:38px}}
-.col-h{font-family:var(--mono);font-size:11.5px;letter-spacing:.18em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:12px;padding-bottom:7px;border-bottom:1px solid var(--rule)}
+/* big number focal moment */
+.bignum{text-align:center;padding:5vh 0 2vh}
+.bignum .n{font-family:var(--display);font-weight:300;font-size:clamp(90px,20vw,260px);line-height:.86;letter-spacing:-.03em;color:var(--gold);font-style:italic}
+.bignum .n.tealc{color:var(--teal)}.bignum .n.greenc{color:var(--green)}.bignum .n.coralc{color:var(--coral)}
+.bignum .cap{font-size:20px;color:var(--ink-soft);margin-top:18px;max-width:34ch;margin-left:auto;margin-right:auto;line-height:1.4}
 
-/* callouts */
-.block{border-left:2px solid var(--gold);background:linear-gradient(90deg,rgba(224,169,63,.07),transparent 75%);padding:18px 22px;border-radius:0 5px 5px 0;margin-top:18px}
-.block.predict{border-color:var(--predict)}
-.block.verdict{border-color:var(--verdict);background:linear-gradient(90deg,rgba(116,199,158,.09),transparent 75%)}
-.block.warn{border-color:var(--coral);background:linear-gradient(90deg,rgba(229,132,104,.08),transparent 75%)}
-.block .bh{font-family:var(--mono);font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:9px}
-.block p{color:var(--ink);font-size:19px;line-height:1.5}
-.block.big p{font-size:22px}
-.guess{font-family:var(--mono);color:var(--ink-faint);font-size:15px;letter-spacing:.05em;margin-top:12px}
-.guess b{color:var(--gold)}
+/* scannable structure — visible skeleton, not bullets, not prose-walls */
+.cluster{display:grid;gap:1px;margin-top:28px;background:var(--rule);border:1px solid var(--rule);border-radius:11px;overflow:hidden}
+@media(min-width:740px){.cluster.c3{grid-template-columns:repeat(3,1fr)}.cluster.c2{grid-template-columns:repeat(2,1fr)}}
+.cluster .it{background:var(--bg2);padding:21px 23px}
+.cluster .it .l{font-family:var(--mono);font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.cluster .it .d{font-size:16.5px;color:var(--ink-soft);line-height:1.42}
+.cluster .it .d b{color:var(--ink)}
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin-top:24px}
+.chips .c{font-family:var(--mono);font-size:13px;letter-spacing:.03em;color:var(--ink);border:1px solid var(--rule-2);border-radius:30px;padding:8px 16px;background:rgba(19,28,37,.55)}
+.chips .c b{color:var(--gold);font-weight:600;margin-right:5px}
 
-/* tables */
-table{width:100%;border-collapse:collapse;font-size:17px;margin-top:6px}
-table.data th{font-family:var(--mono);font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);text-align:left;font-weight:500;padding:0 14px 10px;border-bottom:1px solid var(--rule-strong)}
-table.data td{padding:11px 14px;border-bottom:1px solid var(--rule);color:var(--ink-soft);line-height:1.3}
-table.data td.num{font-family:var(--mono);text-align:right;color:var(--ink);font-size:15px;white-space:nowrap}
+/* the prediction prompt */
+.predict-box{border-left:2px solid var(--gold);padding:4px 0 4px 26px;margin-top:30px}
+.predict-box .q{font-family:var(--display);font-weight:300;font-style:italic;font-size:clamp(23px,3vw,32px);line-height:1.28;color:var(--ink)}
+.predict-box .opts{font-family:var(--mono);font-size:15px;color:var(--ink-faint);margin-top:18px;letter-spacing:.02em;line-height:1.9}
+.predict-box .opts b{color:var(--gold);font-weight:600}
+
+/* verdict — big pull statement */
+.verdict-line{font-family:var(--display);font-weight:300;font-size:clamp(28px,4.6vw,52px);line-height:1.14;letter-spacing:-.015em;color:var(--ink);max-width:24ch}
+.verdict-line .em{font-style:italic;color:var(--green)}
+.verdict-sub{font-size:19px;color:var(--ink-soft);margin-top:22px;max-width:46ch;line-height:1.5}
+
+/* pull quote */
+blockquote{font-family:var(--display);font-weight:300;font-style:italic;font-size:clamp(26px,4vw,44px);line-height:1.18;color:var(--ink);text-align:center;max-width:24ch;margin:6vh auto}
+blockquote .a{display:block;font-family:var(--mono);font-style:normal;font-size:13px;color:var(--ink-faint);letter-spacing:.05em;margin-top:20px}
+
+/* figure / hero chart */
+figure{margin:8vh 0}
+figure.hero-fig{width:min(94vw,920px);margin-left:50%;transform:translateX(-50%)}
+.chartbox{background:linear-gradient(180deg,rgba(19,28,37,.9),rgba(14,20,27,.9));border:1px solid var(--rule);border-radius:12px;padding:30px 28px 20px;box-shadow:0 30px 80px -40px rgba(0,0,0,.8)}
+.chartbox svg{width:100%;max-width:640px;height:auto;overflow:visible;display:block;margin:0 auto}
+figure.hero-fig .chartbox svg{max-width:820px}
+figcaption{font-size:16px;color:var(--ink-soft);margin-top:18px;line-height:1.5;max-width:64ch;margin-left:auto;margin-right:auto;text-align:left}
+figcaption .fn{font-family:var(--mono);font-size:11.5px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-right:8px}
+
+/* data table */
+.tablewrap{margin:5vh 0;overflow-x:auto}
+table.data{width:100%;border-collapse:collapse;font-size:18px}
+table.data caption{caption-side:top;text-align:left;font-size:15px;color:var(--ink-soft);margin-bottom:14px;line-height:1.5}
+table.data caption .fn{font-family:var(--mono);font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-right:7px}
+table.data th{font-family:var(--mono);font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--ink-faint);text-align:left;font-weight:500;padding:0 15px 11px;border-bottom:1px solid var(--rule-2)}
+table.data td{padding:12px 15px;border-bottom:1px solid var(--rule);color:var(--ink-soft);line-height:1.3}
 table.data tr:last-child td{border-bottom:none}
 table.data td b{color:var(--ink)}
+table.data td.num{font-family:var(--mono);text-align:right;color:var(--ink);font-size:15px;white-space:nowrap}
 .num.up{color:var(--green)}.num.dn{color:var(--coral)}.num.key{color:var(--gold)}
-.matrix td.num{text-align:center}.matrix .rowh{color:var(--ink);font-weight:600;font-family:var(--body)}
+table.matrix td.num{text-align:center}.matrix .rh{color:var(--ink);font-weight:600;font-family:var(--body)}
 
-.source{font-family:var(--mono);font-size:12px;color:var(--ink-faint);letter-spacing:.02em;margin-top:18px;padding-top:14px;border-top:1px solid var(--rule)}
-.source::before{content:"◆ ";color:var(--gold);font-size:9px}
+/* the "live in class" gate (during/pre editions) */
+.reveal-gate{border:1px dashed var(--rule-2);border-radius:12px;padding:34px;text-align:center;margin:4vh 0;background:rgba(19,28,37,.4)}
+.reveal-gate .gl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.reveal-gate .gt{font-family:var(--display);font-style:italic;font-size:24px;color:var(--ink);font-weight:300}
+.reveal-gate button{margin-top:20px;font-family:var(--mono);font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);background:transparent;border:1px solid var(--gold);padding:11px 22px;border-radius:30px;cursor:pointer;transition:.2s}
+.reveal-gate button:hover{background:var(--gold);color:#0b0f14}
+.answer.hide{display:none}
 
-/* figures / charts */
-.figure{margin:8px auto 0;max-width:560px}
-.figure svg{width:100%;height:auto;overflow:visible;display:block}
-.chart .ax{stroke:var(--rule-strong);stroke-width:1.3;fill:none}
-.chart .zero{stroke:var(--rule-strong);stroke-width:1;stroke-dasharray:2 3}
-.chart .axlbl{font-family:var(--mono);font-size:12px;fill:var(--ink-faint);letter-spacing:.04em}
+/* chart internals (theme via vars) */
+.chart .ax{stroke:var(--rule-2);stroke-width:1.3;fill:none}
+.chart .zero{stroke:var(--rule-2);stroke-width:1;stroke-dasharray:2 3}
+.chart .axlbl{font-family:var(--mono);font-size:12px;fill:var(--ink-faint);letter-spacing:.03em}
 .chart .vlbl{font-family:var(--mono);font-size:14px;font-weight:600}
 .chart .clbl{font-family:var(--body);font-size:14px;fill:var(--ink-soft)}
 .chart .note{font-family:var(--body);font-size:13px;font-style:italic}
 .bar{transform:scaleY(0);transform-box:fill-box}.bar.pos{transform-origin:bottom}.bar.neg{transform-origin:top}
-.shown .chart .bar{animation:barGrow .8s cubic-bezier(.18,.85,.3,1) forwards}
-@keyframes barGrow{to{transform:scaleY(1)}}
-.draw{stroke-dasharray:2600;stroke-dashoffset:2600}
-.shown .chart .draw{animation:draw 1.2s ease .1s forwards}@keyframes draw{to{stroke-dashoffset:0}}
-.cpop{opacity:0;transform:translateY(7px)}.shown .chart .cpop{animation:cpop .6s ease forwards}@keyframes cpop{to{opacity:1;transform:none}}
-.dot0{transform:scale(0);transform-box:fill-box;transform-origin:center}.shown .chart .dot0{animation:dotin .5s cubic-bezier(.3,1.4,.5,1) forwards}@keyframes dotin{to{transform:scale(1)}}
+.in .bar{animation:bg .9s cubic-bezier(.18,.85,.3,1) forwards}@keyframes bg{to{transform:scaleY(1)}}
+.draw{stroke-dasharray:2600;stroke-dashoffset:2600}.in .draw{animation:dr 1.3s ease .15s forwards}@keyframes dr{to{stroke-dashoffset:0}}
+.cpop{opacity:0;transform:translateY(8px)}.in .cpop{animation:cp .7s ease forwards}@keyframes cp{to{opacity:1;transform:none}}
+.dot0{transform:scale(0);transform-box:fill-box;transform-origin:center}.in .dot0{animation:di .55s cubic-bezier(.3,1.4,.5,1) forwards}@keyframes di{to{transform:scale(1)}}
 
-/* section divider */
-.divider{min-height:62vh;display:flex;flex-direction:column;justify-content:center;padding:12vh 8vw;position:relative}
-.divider .num{font-family:var(--mono);font-size:14px;letter-spacing:.3em;color:var(--gold);margin-bottom:20px}
-.divider h2{font-family:var(--display);font-weight:560;font-size:clamp(38px,6.5vw,72px);line-height:1.0;letter-spacing:-.02em;max-width:16ch}
-.divider h2 em{font-style:italic;color:var(--gold);font-weight:460}
-.divider .ds{font-size:clamp(18px,2.2vw,23px);color:var(--ink-soft);margin-top:22px;max-width:44ch;font-weight:300;line-height:1.45}
-.divider .pips{display:flex;gap:7px;margin-top:34px}.divider .pips i{height:4px;width:36px;background:var(--rule);border-radius:2px}.divider .pips i.on{background:var(--gold)}
-.divider::before{content:"";position:absolute;left:8vw;right:8vw;top:0;height:1px;background:var(--rule)}
+footer{padding:14vh 8vw 12vh;text-align:center;color:var(--ink-faint);font-family:var(--mono);font-size:13px;letter-spacing:.04em;line-height:2}
+footer .big{font-family:var(--display);font-style:italic;font-size:clamp(26px,4vw,40px);color:var(--ink);margin-bottom:24px;letter-spacing:-.01em}
 
-/* reveal (during-class) */
-.reveal{margin:24px auto;max-width:var(--col)}
-.reveal.wide{max-width:1040px}
-.curtain{border:1px dashed var(--rule-strong);border-radius:8px;padding:30px;text-align:center;cursor:pointer;
-  background:linear-gradient(180deg,rgba(20,30,40,.5),rgba(12,17,22,.2));transition:.3s;position:relative}
-.curtain:hover{border-color:var(--gold);background:linear-gradient(180deg,rgba(30,40,52,.6),rgba(12,17,22,.3))}
-.curtain .cl{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--ink-faint)}
-.curtain .cq{font-family:var(--display);font-size:23px;color:var(--ink);margin:10px 0 16px;font-weight:500}
-.curtain .cbtn{display:inline-flex;align-items:center;gap:10px;font-family:var(--mono);font-size:12px;letter-spacing:.14em;text-transform:uppercase;
-  color:var(--gold);border:1px solid var(--gold);padding:11px 20px;border-radius:40px;transition:.25s}
-.curtain:hover .cbtn{background:var(--gold);color:#0c1116}
-.curtain .chev{display:block;margin-top:14px;color:var(--gold);animation:bob 2s ease-in-out infinite}
-.reveal-inner{max-height:0;overflow:hidden;opacity:0;transition:max-height .8s cubic-bezier(.2,.7,.2,1),opacity .7s ease .15s}
-.reveal.open .reveal-inner{max-height:6000px;opacity:1}
-.reveal.open .curtain{display:none}
-
-/* teaser (pre-class) */
-.teaser{margin:30px auto;max-width:var(--col);text-align:center;border:1px solid var(--rule);border-radius:10px;padding:46px 30px;
-  background:radial-gradient(120% 100% at 50% 0,rgba(224,169,63,.05),transparent 60%)}
-.teaser .seal{width:70px;height:70px;border-radius:50%;border:1.5px solid var(--gold);display:grid;place-items:center;margin:0 auto 22px;color:var(--gold);position:relative}
-.teaser .seal::before{content:"";position:absolute;inset:6px;border:1px dashed rgba(224,169,63,.4);border-radius:50%}
-.teaser .seal svg{width:28px;height:28px}
-.teaser .tq{font-family:var(--display);font-size:clamp(24px,3.4vw,32px);font-weight:500;line-height:1.15;max-width:22ch;margin:0 auto;color:var(--ink)}
-.teaser .tsub{color:var(--ink-soft);font-style:italic;margin-top:16px}
-.teaser .tread{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--ink-faint);margin-top:22px}
-.teaser .tread b{color:var(--gold)}
-
-/* mcq */
-.mcq{margin-top:20px}
-.mcq-btn{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);background:none;border:1px solid var(--rule-strong);padding:8px 14px;border-radius:4px;cursor:pointer;transition:.2s}
-.mcq-btn:hover{color:var(--gold);border-color:var(--gold)}
-.mcq-body{display:none;margin-top:14px;border-left:2px solid var(--green);padding:4px 0 4px 16px}
-.mcq-body.show{display:block}
-.mcq-body .q{color:var(--ink);font-size:17px;margin-bottom:6px}
-.mcq-body .a{font-family:var(--mono);font-size:13px;color:var(--green)}
-
-/* pull verdict */
-.unit.verdict-unit{max-width:880px}
-
-footer{position:relative;z-index:2;text-align:center;padding:8vh 8vw 12vh;border-top:1px solid var(--rule);margin-top:6vh}
-footer .fh{font-family:var(--display);font-size:clamp(30px,5vw,54px);font-weight:560;letter-spacing:-.02em}
-footer .fh em{font-style:italic;color:var(--gold)}
-footer .read{max-width:60ch;margin:24px auto 0;color:var(--ink-soft);font-size:18px;line-height:1.6}
-footer .bridge{font-family:var(--mono);font-size:13px;letter-spacing:.04em;color:var(--ink-faint);margin-top:30px}
-footer .bridge b{color:var(--ink)}
-/* freeze mode for screenshots/print */
-body.frozen .fx{opacity:1!important;transform:none!important;transition:none!important}
-body.frozen .chart .bar{transform:scaleY(1)!important;animation:none!important}
-body.frozen .chart .draw{stroke-dashoffset:0!important;animation:none!important}
-body.frozen .chart .cpop,body.frozen .chart .dot0{opacity:1!important;transform:none!important;animation:none!important}
-body.frozen .reveal-inner{max-height:none!important;opacity:1!important}
-body.frozen .curtain{display:none!important}
-body.frozen #hero,body.compacthero #hero{min-height:auto;height:auto;padding:6vh 8vw 5vh}
-body.frozen .scrollcue,body.compacthero .scrollcue{display:none}
-body.frozen .divider{min-height:auto;padding:8vh 8vw}
-@media print{#toc,#progress,#edition,.scrollcue{display:none}body{background:#0c1116}}
+@media(max-width:680px){body{font-size:19px}.scene{padding:8vh 0}.part{padding:10vh 7vw 6vh}}
 </style>
 </head>
 <body>
-<div id="progress"></div>
-<div id="edition">Before class · no spoilers</div>
-<nav id="toc"></nav>
-<header id="hero">
-  <div class="bignum">G</div>
-  <div class="meta">Summer ESG Module · PGT · 29 June 2026</div>
-  <h1>Governance Factors in <em>ESG</em> Investing</h1>
-  <div class="sub">From the agency problem to the frontier of shareholder democracy.</div>
-  <div class="rule"></div>
-  <div class="by"><b>Jae Yung Kim</b></div>
-  <div class="scrollcue"><span class="arr"></span> scroll to begin</div>
+<div id="prog"></div>
+<div id="ed">Full edition</div>
+<nav id="dots"></nav>
+
+<!-- ===================== HERO ===================== -->
+<header class="hero" data-dot="Open">
+  <div class="kick fx in">Summer ESG Module · Postgraduate</div>
+  <h1 class="fx in d1">Governance Factors in <em>ESG</em> Investing</h1>
+  <div class="sub fx in d2">The machine that turns what owners want into what a company actually does.</div>
+  <div class="by fx in d3"><span><b>Jae Yung Kim</b></span><span>University of Exeter</span><span>29 June 2026</span></div>
+  <div class="ghost">G</div>
+  <div class="cue fx in d4"><span class="a"></span>Scroll</div>
 </header>
-<main id="doc"></main>
+
+<main>
+
+<!-- ===================== PROLOGUE ===================== -->
+<section class="part" data-dot="Prologue">
+  <div class="pn fx">Prologue</div>
+  <h2 class="fx d1">Who actually <em>decides</em> what a company does?</h2>
+  <div class="pl fx d2">Not the managers. Not whoever owns the most shares. Not the law. Something subtler — a machine.</div>
+  <div class="pbig">0</div>
+</section>
+
+<div class="col">
+  <section class="scene">
+    <p class="lede fx">In May 2021, a hedge fund almost no one had heard of did something that, on paper, should have been impossible.</p>
+    <p class="fx d1">It was called <strong>Engine No.&nbsp;1</strong>. It had existed for months. And it owned about one two-thousandth of one percent of ExxonMobil — one of the largest oil companies on earth.</p>
+  </section>
+
+  <section class="scene bignum">
+    <div class="n fx">0.02%</div>
+    <div class="cap fx d1">On a $10,000 company, that is two dollars. Round it off and it is nothing. A rounding-error shareholder.</div>
+  </section>
+
+  <section class="scene">
+    <p class="fx">On the strength of that vanishing stake, Engine&nbsp;No.&nbsp;1 nominated four outside directors to Exxon's board, on one argument: the company was destroying its own future by ignoring the energy transition.</p>
+    <div class="predict-box fx d1">
+      <div class="q">A brand-new fund holding 0.02% runs directors against management. How many of the twelve board seats does it win?</div>
+      <div class="opts">commit to a number &nbsp;·&nbsp; <b>none</b> &nbsp; <b>one</b> &nbsp; <b>three</b> &nbsp;·&nbsp; or is it hopeless from the start?</div>
+    </div>
+  </section>
+
+  <section class="scene answer" data-reveal>
+    <div class="stage evidence fx"><span class="tag">What happened</span><span class="ln"></span></div>
+    <p class="lede fx d1">It won <span class="hl-g">three of the twelve seats.</span></p>
+    <p class="fx d2">No new law. No boycott. No takeover. A rounding-error shareholder reshaped the board of an oil major with a single ordinary instrument — the <span class="hl">shareholder vote</span>. It did not need its own shares to win. It needed everyone else's, and the giant index funds that hold Exxon looked at the case and voted with the insurgent.</p>
+  </section>
+</div>
+
+<blockquote class="fx">Governance is not a third silo beside E and S. It is the machinery that turns preferences into what the firm actually does.</blockquote>
+
+<div class="col">
+  <section class="scene">
+    <p class="fx">That is the thesis. Environmental and social outcomes are not wished into being — they are <em>produced</em> by a mechanism. Understand the mechanism and you understand when ESG preferences become corporate action, and when they evaporate into press releases.</p>
+    <p class="fx d1">So we spend our time on the machine: how it is built, how power flows through it, where preferences are carried faithfully, and where they are gamed, rewired, or broken.</p>
+  </section>
+</div>
+
+<!-- ===================== PART 1 — FOUNDATIONS ===================== -->
+<section class="part" data-dot="1 · Foundations">
+  <div class="pn fx">Part One</div>
+  <h2 class="fx d1">The <em>agency</em> problem</h2>
+  <div class="pl fx d2">Every tool of governance exists to solve one problem — and the whole field becomes legible once you see it.</div>
+  <div class="pbig">1</div>
+</section>
+
+<div class="col">
+  <section class="scene">
+    <p class="lede fx">The people who <em>own</em> the firm are not the people who <em>run</em> it.</p>
+    <p class="fx d1">Berle &amp; Means named it in 1932 — the <strong>separation of ownership and control</strong>: ownership dispersed across millions of small holders, control held by managers who own little. Jensen &amp; Meckling priced the gap <span class="cite">JFE 1976</span>: whenever an <em>agent</em> acts for a <em>principal</em>, the relationship leaks <span class="hl">agency costs</span> — of three kinds.</p>
+    <div class="cluster c3 fx d2">
+      <div class="it"><div class="l">Monitoring</div><div class="d">what owners spend to <b>watch</b> — boards, auditors, analysts.</div></div>
+      <div class="it"><div class="l">Bonding</div><div class="d">what managers spend to <b>promise</b> — debt, pay put at risk.</div></div>
+      <div class="it"><div class="l">Residual loss</div><div class="d">the value <b>still destroyed</b> despite both. Never zero.</div></div>
+    </div>
+  </section>
+
+  <section class="scene tight">
+    <blockquote style="font-size:clamp(22px,3.4vw,34px);max-width:30ch">“Corporate governance deals with the ways suppliers of finance assure themselves of getting a return on their investment.”<span class="a">— Shleifer &amp; Vishny, Journal of Finance 1997</span></blockquote>
+  </section>
+
+  <section class="scene">
+    <p class="lede fx">Six mechanisms manage the gap.</p>
+    <div class="chips fx d1">
+      <span class="c"><b>1</b> Boards</span><span class="c"><b>2</b> Voting</span><span class="c"><b>3</b> Blockholders</span><span class="c"><b>4</b> Market for control</span><span class="c"><b>5</b> Disclosure</span><span class="c"><b>6</b> Incentives</span>
+    </div>
+    <p class="fx d2">The thread through all six: <strong>every one runs on shareholders choosing to use it.</strong> The Exxon insurgents used two — voting and the market for control — and they worked only because other owners cooperated.</p>
+  </section>
+</div>
+
+<!-- arc: board diversity -->
+<div class="col">
+  <section class="scene">
+    <div class="stage predict fx"><span class="tag">Predict</span><span class="arc">Board diversity · Adams &amp; Ferreira</span><span class="ln"></span></div>
+    <h3 class="head fx d1">Should a firm put more <em>women</em> on its board?</h3>
+    <p class="fx d2">A board that is ninety percent male, and a proposal to add several women. The question divides people instantly — so be honest about your own answer first.</p>
+    <div class="predict-box fx d3">
+      <div class="q">Does board gender diversity raise firm performance? And would a binding quota raise or lower the value of a typical firm?</div>
+      <div class="opts"><b>raise</b> &nbsp; <b>lower</b> &nbsp; <b>no effect</b></div>
+    </div>
+  </section>
+
+  <section class="scene answer" data-reveal>
+    <div class="stage evidence fx"><span class="tag">Evidence</span><span class="arc">Adams &amp; Ferreira, JFE 2009</span><span class="ln"></span></div>
+    <p class="lede fx d1">Diversity reliably raises <span class="hl-g">monitoring</span> — but not <span class="hl-c">value</span>.</p>
+    <div class="cluster c2 fx d2">
+      <div class="it"><div class="l">Behaviour → clear</div><div class="d">attendance up, more seats on oversight committees, weak CEOs disciplined harder. Boards monitor <b>more</b>.</div></div>
+      <div class="it"><div class="l">Value → depends on method</div><div class="d">a positive raw correlation that <b>flips negative</b> as the statistics get careful — watch it below.</div></div>
+    </div>
+  </section>
+</div>
+
+<figure class="hero-fig answer fx" data-reveal data-dot="">
+  <div class="chartbox"><div class="chart-slot" data-chart="signflip"></div></div>
+  <figcaption><span class="fn">Figure 1</span>The estimated effect of board gender diversity on firm value as the method gets more careful. A positive raw correlation (OLS) turns negative once firm fixed effects absorb selection, and strongly negative once diversity is instrumented for cause. The point is the change of <em>sign</em>, not the magnitude.</figcaption>
+</figure>
+
+<div class="col">
+  <section class="scene answer" data-reveal>
+    <p class="fx">The cheerful correlation was <strong>selection</strong> — good firms were the ones adding women. Isolate the cause and the average effect is ~0 to negative, turning positive <em>only</em> where governance was weak to begin with. A blanket quota can destroy value in firms that did not lack oversight in the first place.</p>
+  </section>
+
+  <section class="scene verdict answer" data-reveal>
+    <div class="stage verdict fx"><span class="tag">Verdict</span><span class="ln"></span></div>
+    <div class="verdict-line fx d1">Diversity reliably improves <span class="em">monitoring</span> — but its average causal effect on <span class="em">value</span> is about zero to negative, concentrated in poorly-governed firms.</div>
+    <div class="verdict-sub fx d2">“More is always better” is a slogan; the evidence replaces it with “it depends on the firm.” Diversity is at once a social goal and a governance-quality question.</div>
+  </section>
+</div>
+
+<!-- arc: pay for luck -->
+<div class="col">
+  <section class="scene">
+    <div class="stage predict fx"><span class="tag">Predict</span><span class="arc">Executive pay · Bertrand &amp; Mullainathan</span><span class="ln"></span></div>
+    <h3 class="head fx d1">Are CEOs paid for <em>luck</em>?</h3>
+    <p class="fx d2">An oil company's share price doubles — not from strategy, but because the world price of oil doubled. The CEO did nothing.</p>
+    <div class="predict-box fx d3">
+      <div class="q">Does his pay rise with the windfall anyway — and if so, how much, relative to pay for performance he actually produced?</div>
+    </div>
+  </section>
+</div>
+
+<figure class="hero-fig answer fx" data-reveal>
+  <div class="chartbox"><div class="chart-slot" data-chart="payluck"></div></div>
+  <figcaption><span class="fn">Figure 2</span>How strongly CEO pay responds to a dollar of genuine performance (“skill”) versus a dollar of pure luck — an oil-price windfall. On the market measure the two are essentially equal (skill <span class="mono">0.38</span>, luck <span class="mono">0.35</span>).</figcaption>
+</figure>
+
+<div class="col">
+  <section class="scene verdict answer" data-reveal>
+    <div class="stage verdict fx"><span class="tag">Verdict</span><span class="ln"></span></div>
+    <div class="verdict-line fx d1">CEOs are paid for luck <span class="em">about as much as for skill</span> — and a real monitor strips out exactly the luck.</div>
+    <div class="verdict-sub fx d2">When a large shareholder sits on the board, pay-for-luck falls by roughly <span class="hl">23–33%</span> while pay for genuine performance is untouched. Pay is partly a symptom of weak governance, not only a cure for it — which is why shareholders later demanded a vote on it.</div>
+  </section>
+</div>
+
+<!-- ===================== PART 2 — SHAREHOLDERS & VOTING ===================== -->
+<section class="part" data-dot="2 · Voting">
+  <div class="pn fx">Part Two</div>
+  <h2 class="fx d1">Shareholders &amp; voting: the <em>heart</em> of the machine</h2>
+  <div class="pl fx d2">Ownership has quietly re-concentrated — not into families, but into a handful of giant institutions. Who holds the votes has become a central fact.</div>
+  <div class="pbig">2</div>
+</section>
+
+<div class="col">
+  <section class="scene">
+    <p class="lede fx">The owners with the most votes are precisely the owners who <em>cannot walk away.</em></p>
+    <p class="fx d1">The <span class="hl">Big Three</span> — BlackRock, Vanguard, State Street — now cast a huge share of U.S. votes, and they are mostly <strong>index funds</strong>. An index fund holds the market by construction, so it cannot sell its disapproval. Its only lever is <em>voice</em>, not <em>exit</em>.</p>
+    <div class="cluster c2 fx d2">
+      <div class="it"><div class="l">The worry</div><div class="d">tiny fees, gains shared with every rival → why monitor? They should be <b>lazy owners</b>.</div></div>
+      <div class="it"><div class="l">The evidence</div><div class="d">index-heavy firms get <b>more independent directors, fewer takeover defences</b> — “passive investors, <b>not</b> passive owners.” <span class="cite">Appel et al., JFE 2016</span></div></div>
+    </div>
+  </section>
+
+  <section class="scene tight">
+    <p class="fx mono" style="color:var(--ink-faint);font-size:15px;letter-spacing:.04em">One detail to hold for later — eligibility to vote is fixed on a single <span class="hl">record date</span>, but shares trade every day. The set of people allowed to vote can differ from the set who own the firm a week later. It looks like a technicality. In Part Four it becomes the whole story.</p>
+  </section>
+</div>
+
+<!-- arc: activism -->
+<div class="col">
+  <section class="scene">
+    <div class="stage predict fx"><span class="tag">Predict</span><span class="arc">Hedge-fund activism · Brav et al.</span><span class="ln"></span></div>
+    <h3 class="head fx d1">When an activist arrives, is value <em>built</em> or <em>stripped</em>?</h3>
+    <p class="fx d2">A fund quietly takes a six-percent stake in an underperforming company, files the disclosure that announces it, and demands change.</p>
+    <div class="predict-box fx d3">
+      <div class="q">Over the following year, does the stock rise as lazy management is disciplined, fall as raiders strip it for parts, or pop and then revert as the hype fades?</div>
+    </div>
+  </section>
+</div>
+
+<figure class="hero-fig answer fx" data-reveal>
+  <div class="chartbox"><div class="chart-slot" data-chart="activism"></div></div>
+  <figcaption><span class="fn">Figure 3</span>Cumulative abnormal return around an activist's 13D filing. The stock rises about <span class="mono">7%</span> around the announcement and then <em>holds</em> — it does not give the gain back, the signature of genuine value creation rather than overreaction.</figcaption>
+</figure>
+
+<div class="col">
+  <section class="scene verdict answer" data-reveal>
+    <div class="stage verdict fx"><span class="tag">Verdict</span><span class="ln"></span></div>
+    <div class="verdict-line fx d1">On average activism <span class="em">creates value, and the gain sticks</span>: about +7%, no reversal, with real operating and governance gains.</div>
+    <div class="verdict-sub fx d2">The short-termist asset-stripper is not supported in the broad data — though distributional fights, where gains come partly at the expense of workers or creditors, remain a fair and separate concern.</div>
+  </section>
+</div>
+
+<!-- arc: ISS / proxy advisors -->
+<div class="col">
+  <section class="scene">
+    <div class="stage predict fx"><span class="tag">Predict</span><span class="arc">Proxy advisors · Malenko &amp; Shen</span><span class="ln"></span></div>
+    <h3 class="head fx d1">How much does <em>ISS</em> really move a vote?</h3>
+    <p class="fx d2">A dispersed owner cannot research the thousands of items it votes on each year, so it buys advice. Two firms dominate, and ISS alone covers some forty thousand meetings. The worry: unelected kingmakers. But you cannot just compare votes ISS opposed with votes it supported — it opposes the troubled proposals to begin with.</p>
+    <div class="predict-box fx d3">
+      <div class="q">ISS flips a say-on-pay recommendation from <em>for</em> to <em>against</em>. By how many points does shareholder support fall — essentially zero, or huge?</div>
+    </div>
+  </section>
+</div>
+
+<figure class="hero-fig answer fx" data-reveal>
+  <div class="chartbox"><div class="chart-slot" data-chart="rdd"></div></div>
+  <figcaption><span class="fn">Figure 4</span>Support against firm performance, around the cutoff that triggers an ISS recommendation. Two firms either side of the line are near-identical except that one gets a negative recommendation; the jump at the threshold, scaled up, implies a causal effect of roughly <span class="mono">25</span> points.</figcaption>
+</figure>
+
+<div class="col">
+  <section class="scene verdict answer" data-reveal>
+    <div class="stage verdict fx"><span class="tag">Verdict</span><span class="ln"></span></div>
+    <div class="verdict-line fx d1">A negative ISS recommendation <span class="em">causally removes about a quarter of the vote</span> — real power, and bounded at the same time.</div>
+    <div class="verdict-sub fx d2">Because roughly <span class="hl">80%</span> of funds vote their own custom policy that ISS merely helps implement, “ISS decides everything” is an overstatement. The influence is genuine and limited.</div>
+  </section>
+</div>
+
+<!-- ===================== PART 3 — GOVERNANCE × ESG ===================== -->
+<section class="part" data-dot="3 · Governance × ESG">
+  <div class="pn fx">Part Three</div>
+  <h2 class="fx d1">Where preferences become <em>action</em> — or don't</h2>
+  <div class="pl fx d2">E and S reach a company through two channels: engagement behind closed doors, and the public ballot. In both, the quality of the machine decides whether a preference becomes action or a press release.</div>
+  <div class="pbig">3</div>
+</section>
+
+<!-- arc: strategic voting -->
+<div class="col">
+  <section class="scene">
+    <div class="stage predict fx"><span class="tag">Predict</span><span class="arc">Strategic voting · Michaely et&nbsp;al.</span><span class="ln"></span></div>
+    <h3 class="head fx d1">Do “ESG” funds actually vote their <em>values</em>?</h3>
+    <p class="fx d2">A fund that markets itself as an environmental champion, and a climate proposal coming to a vote.</p>
+    <div class="predict-box fx d3">
+      <div class="q">When its vote would genuinely <em>decide</em> the outcome — a close, pivotal vote — does it support the proposal more often than usual, the same, or less?</div>
+    </div>
+  </section>
+</div>
+
+<figure class="hero-fig answer fx" data-reveal>
+  <div class="chartbox"><div class="chart-slot" data-chart="strategic"></div></div>
+  <figcaption><span class="fn">Figure 5</span>An ESG fund's <em>extra</em> support for environmental and social proposals, relative to its peers. Large (about <span class="mono">+22</span> points) when the vote is not pivotal — a costless signal — and collapsing by roughly <span class="mono">60%</span> when the fund's vote would actually decide the result and impose the cost.</figcaption>
+</figure>
+
+<div class="col">
+  <section class="scene verdict answer" data-reveal>
+    <div class="stage verdict fx"><span class="tag">Verdict</span><span class="ln"></span></div>
+    <div class="verdict-line fx d1">ESG funds back proposals when it is <span class="em">costless</span>, and quietly withdraw support precisely when their vote would be <span class="em">decisive</span>.</div>
+    <div class="verdict-sub fx d2">Average support therefore <em>overstates</em> true commitment — the headline number is padded with non-pivotal yes-votes. Greenwashing shows up not only in brochures but in voting behaviour, which is why behaviour must be read strategically, not at face value.</div>
+  </section>
+</div>
+
+<!-- arc: engagement -->
+<div class="col">
+  <section class="scene">
+    <div class="stage predict fx"><span class="tag">Predict</span><span class="arc">Engagement · Dimson, Karakaş &amp; Li</span><span class="ln"></span></div>
+    <h3 class="head fx d1">Does quiet <em>engagement</em> pay?</h3>
+    <p class="fx d2">The private channel: a large investor pressing management behind closed doors, with no proxy fight.</p>
+    <div class="predict-box fx d3">
+      <div class="q">Does it pay off in the stock always, only when it succeeds, or essentially never? And how often does engagement actually succeed?</div>
+    </div>
+  </section>
+</div>
+
+<figure class="hero-fig answer fx" data-reveal>
+  <div class="chartbox"><div class="chart-slot" data-chart="engagement"></div></div>
+  <figcaption><span class="fn">Figure 6</span>Abnormal return in the year after an engagement. The payoff is concentrated entirely in the successful cases (~<span class="mono">+7%</span>); failed engagements move the stock about zero. Because success is roughly one in five, the average effect is small.</figcaption>
+</figure>
+
+<div class="col">
+  <section class="scene verdict answer" data-reveal>
+    <div class="stage verdict fx"><span class="tag">Verdict</span><span class="ln"></span></div>
+    <div class="verdict-line fx d1">Engagement pays — <span class="em">but only when it succeeds</span>: about +7% when it works, essentially zero when it does not, success roughly one time in five.</div>
+    <div class="verdict-sub fx d2">Active ownership creates value, but it is hard, selective work, not a free lunch. And that +7% is a statement about shareholder value, which is not the same as social welfare.</div>
+  </section>
+</div>
+
+<!-- ===================== PART 4 — FRONTIER ===================== -->
+<section class="part" data-dot="4 · Frontier">
+  <div class="pn fx">Part Four</div>
+  <h2 class="fx d1">The frontier: shareholder <em>democracy</em></h2>
+  <div class="pl fx d2">We have treated the electorate of a vote as fixed. The research frontier dissolves that — and with it, a good deal of our intuition about what a vote even means.</div>
+  <div class="pbig">4</div>
+</section>
+
+<div class="col">
+  <section class="scene">
+    <p class="lede fx">People trade <em>before</em> they vote.</p>
+    <p class="fx d1">Shares change hands right up to the record date, so the set of owners <em>at the moment of the vote</em> is not given from outside — it is chosen in the market. The electorate is <span class="hl">endogenous</span> <span class="cite">Levit, Malenko &amp; Maug, JF 2024</span>. And it runs in a loop:</p>
+    <div class="chips fx d2">
+      <span class="c">expectations</span><span class="c">→ valuations</span><span class="c">→ who owns the shares</span><span class="c">→ the vote</span><span class="c">→ validates the belief</span>
+    </div>
+    <p class="fx d3">So outcomes can be <strong>self-fulfilling</strong>, and a high price need not mean happy owners.</p>
+  </section>
+
+  <section class="scene">
+    <div class="stage predict fx"><span class="tag">Predict</span><span class="arc">Post-meeting trading · Li, Maug &amp; Schwartz-Ziv</span><span class="ln"></span></div>
+    <p class="fx d1">If shares sort by belief around a vote, then once a contentious meeting resolves, the losers should no longer wish to hold a company run against their preferences.</p>
+    <div class="predict-box fx d2">
+      <div class="q">After a contentious meeting, who trades more — the winners or the losers? And in which direction do the losers go?</div>
+    </div>
+  </section>
+</div>
+
+<figure class="hero-fig answer fx" data-reveal>
+  <div class="chartbox"><div class="chart-slot" data-chart="volume"></div></div>
+  <figcaption><span class="fn">Figure 7</span>Abnormal trading volume around a shareholder meeting. Volume peaks near <span class="mono">20%</span> above normal and stays elevated for weeks, as funds on the losing side sell out and the shareholder base re-sorts toward agreement — even when prices barely move.</figcaption>
+</figure>
+
+<div class="col">
+  <section class="scene verdict answer" data-reveal>
+    <div class="stage verdict fx"><span class="tag">Verdict</span><span class="ln"></span></div>
+    <div class="verdict-line fx d1">After a contested vote the <span class="em">losers sell and the winners stay</span> — the electorate re-sorts, and the base becomes more homogeneous.</div>
+    <div class="verdict-sub fx d2">Ownership at the moment of the vote is endogenous, and this post-meeting selling is the empirical fingerprint of exactly that mechanism. Once the electorate is endogenous, even “what is a vote worth?” becomes a formal, unsettled question.</div>
+  </section>
+</div>
+
+<!-- ===================== PART 5 — DUAL-CLASS ===================== -->
+<section class="part" data-dot="5 · Dual-class">
+  <div class="pn fx">Part Five</div>
+  <h2 class="fx d1">A live question: dual-class <em>sunsets</em></h2>
+  <div class="pl fx d2">We end not with a settled result but an open one — where the machinery of the lecture meets a fast-spreading structure, and the answer is genuinely unknown.</div>
+  <div class="pbig">5</div>
+</section>
+
+<div class="col">
+  <section class="scene">
+    <p class="fx">When Snap went public it sold shares carrying <em>no votes at all</em>. Founders at Google, Meta and Snap keep voting <strong>control</strong> while holding only a small slice of the <strong>cash flows</strong>. The dual-class share forces apart two things that usually travel together — and separating them is the key.</p>
+    <div class="predict-box fx d1">
+      <div class="q">Would you pay more or less for a no-vote share? And, separately: is a founder's voting <em>control</em> good or bad for the value of the firm?</div>
+    </div>
+  </section>
+</div>
+
+<figure class="hero-fig answer fx" data-reveal>
+  <div class="chartbox"><div class="chart-slot" data-chart="gim"></div></div>
+  <figcaption><span class="fn">Figure 8</span>Firm value against insiders' stake, split into its two components. More insider <em>cash-flow</em> ownership raises value, then flattens (incentive alignment); more insider <em>voting</em> control lowers it (entrenchment). The gap between them — the <em>wedge</em> — is where the danger lives.</figcaption>
+</figure>
+
+<div class="col">
+  <section class="scene answer" data-reveal>
+    <p class="lede fx">Ownership aligns; control insulates — and the structure is now in nearly <span class="hl">30%</span> of U.S. IPOs.</p>
+    <p class="fx d1">Value peaks around a 25-point wedge, then falls: a little founder control helps, too much destroys. So the question is not “ban or allow,” but <strong>how to make control expire</strong> — a <span class="hl">sunset</span>. Here the lecturer's own work begins, on a real puzzle:</p>
+    <div class="cluster c2 fx d2">
+      <div class="it"><div class="l">Combined vote</div><div class="d">the founder's super-votes count → he wins <b>by definition</b>. The sunset barely binds.</div></div>
+      <div class="it"><div class="l">Majority-of-the-minority</div><div class="d">looks like the fix — but he can <b>buy out</b> the dissenters, and bought-out shares <b>leave</b> the protected minority.</div></div>
+    </div>
+  </section>
+</div>
+
+<figure class="hero-fig answer fx" data-reveal>
+  <div class="chartbox"><div class="chart-slot" data-chart="phase"></div></div>
+  <figcaption><span class="fn">Figure 9</span>A sketch from the model of the “sunset contest.” Whether the minority is genuinely protected (foreclosed from capture) or the outcome is up for grabs (contested) depends on how much ownership is locked beyond the founder's reach. Time-based sunsets do not foreclose capture; an ownership-band sunset can.</figcaption>
+</figure>
+
+<blockquote class="fx">Can a rule meant to <em>protect</em> the minority end up <em>hollowing</em> it?</blockquote>
+
+<div class="col">
+  <section class="scene verdict answer" data-reveal>
+    <div class="verdict-sub fx" style="font-size:21px">The open question is not whether sunsets are a good idea — almost everyone agrees they are — but which <em>design</em> actually disciplines a founder rather than merely appearing to. That is genuinely unsettled, it is where the machinery of this lecture points, and it is the question I put back to you: <span class="hl">what do you think?</span></div>
+  </section>
+</div>
+
+</main>
+
 <footer>
-  <div class="fh">Thank you — <em>questions?</em></div>
-  <div class="read"><b>What to read:</b> Levit–Malenko–Maug, <em>Trading and Shareholder Democracy</em> (JF 2024) &amp; <em>The Voting Premium</em> (JF 2026) · Malenko &amp; Shen (RFS 2016) · Appel–Gormley–Keim (JFE 2016) · Michaely et al. (RF 2024) · Dimson–Karakaş–Li (RFS 2015) · Shleifer &amp; Vishny (JF 1997).</div>
-  <div class="bridge">This afternoon: the <b>African Bank (ABIL)</b> governance-failure case.</div>
+  <div class="big">Environmental and social outcomes are produced by the governance machine — or not at all.</div>
+  Governance Factors in ESG Investing · Summer ESG Module · Jae Yung Kim · University of Exeter · 2026<br>
+  This afternoon: the African Bank (ABIL) case — the same machine, in failure.
 </footer>
 
 <script>
-const MODE = "pre"; // EDITION: "full" (after class) · "during" (reveal live) · "pre" (before class)
+/* ============ MODE: full | during | pre ============ */
+const MODE = "pre";
+document.getElementById("ed").textContent = ({full:"Full edition",during:"During class",pre:"Pre-class"})[MODE];
 
-/* ============================ CHART LIBRARY (animated SVG, dark) ============================ */
+/* ============ chart library (animated SVG, theme via CSS vars) ============ */
 const C = {
-  bars(spec){
-    const W=520,H=spec.h||300, pad={t:22,r:14,b:44,l:20};
-    const min=spec.min!=null?spec.min:0, max=spec.max;
-    const y=v=>pad.t+(max-v)/(max-min)*(H-pad.t-pad.b); const zeroY=y(0);
-    let groups=spec.groups; const slotW=(W-pad.l-pad.r)/groups.length;
-    let s=`<svg viewBox="0 0 ${W} ${H}" class="chart" role="img">`;
-    s+=`<line class="zero" x1="${pad.l}" y1="${zeroY}" x2="${W-pad.r}" y2="${zeroY}"/>`;
-    if(spec.ylabel) s+=`<text class="axlbl cpop" x="${pad.l-4}" y="${pad.t-7}">${spec.ylabel}</text>`;
-    let delay=0;
-    groups.forEach((g,gx)=>{
-      const bw=Math.min(58,(slotW-26)/g.bars.length);
-      const gx0=pad.l+slotW*gx+(slotW-bw*g.bars.length-(g.bars.length-1)*10)/2;
-      g.bars.forEach((b,bx)=>{
-        const x=gx0+bx*(bw+10); const yv=y(b.v), top=Math.min(yv,zeroY), hgt=Math.abs(yv-zeroY)||2; const pos=b.v>=0;
-        s+=`<rect class="bar ${pos?'pos':'neg'}" x="${x}" y="${top}" width="${bw}" height="${hgt}" rx="2" fill="${b.color}" style="animation-delay:${delay}s"/>`;
-        const lblY=pos?top-9:top+hgt+19;
-        s+=`<text class="vlbl cpop" x="${x+bw/2}" y="${lblY}" text-anchor="middle" fill="${b.color}" style="animation-delay:${delay+.25}s">${b.label}</text>`;
-        delay+=.12;
-      });
-      s+=`<text class="clbl cpop" x="${pad.l+slotW*gx+slotW/2}" y="${H-pad.b+26}" text-anchor="middle" style="animation-delay:${delay+.1}s">${g.label}</text>`;
-    });
-    if(spec.foot) s+=`<text class="note cpop" x="${W/2}" y="${H-6}" text-anchor="middle" fill="var(--ink-faint)" style="animation-delay:${delay+.3}s">${spec.foot}</text>`;
-    return s+`</svg>`;
-  },
-  rdd(){
-    const W=520,H=300,pad={t:24,r:18,b:42,l:24}; let s=`<svg viewBox="0 0 ${W} ${H}" class="chart">`;
-    const x0=pad.l,x1=W-pad.r,cx=(x0+x1)/2,yb=H-pad.b;
-    s+=`<line class="ax" x1="${x0}" y1="${yb}" x2="${x1}" y2="${yb}"/><line class="ax" x1="${cx}" y1="${pad.t}" x2="${cx}" y2="${yb}"/>`;
-    s+=`<line class="zero" x1="${cx}" y1="${pad.t}" x2="${cx}" y2="${yb}"/>`;
+  bars(s){const W=520,H=s.h||300,p={t:22,r:14,b:44,l:20},min=s.min!=null?s.min:0,max=s.max,
+    y=v=>p.t+(max-v)/(max-min)*(H-p.t-p.b),z=y(0),g=s.groups,sw=(W-p.l-p.r)/g.length;
+    let o=`<svg viewBox="0 0 ${W} ${H}" class="chart">`,d=0;
+    o+=`<line class="zero" x1="${p.l}" y1="${z}" x2="${W-p.r}" y2="${z}"/>`;
+    if(s.ylabel)o+=`<text class="axlbl cpop" x="${p.l-4}" y="${p.t-7}">${s.ylabel}</text>`;
+    g.forEach((G,gi)=>{const bw=Math.min(58,(sw-26)/G.bars.length),x0=p.l+sw*gi+(sw-bw*G.bars.length-(G.bars.length-1)*10)/2;
+      G.bars.forEach((b,bi)=>{const x=x0+bi*(bw+10),yv=y(b.v),top=Math.min(yv,z),h=Math.abs(yv-z)||2,pos=b.v>=0;
+        o+=`<rect class="bar ${pos?'pos':'neg'}" x="${x}" y="${top}" width="${bw}" height="${h}" rx="2" fill="${b.color}" style="animation-delay:${d}s"/>`;
+        o+=`<text class="vlbl cpop" x="${x+bw/2}" y="${pos?top-9:top+h+19}" text-anchor="middle" fill="${b.color}" style="animation-delay:${d+.25}s">${b.label}</text>`;d+=.12;});
+      o+=`<text class="clbl cpop" x="${p.l+sw*gi+sw/2}" y="${H-p.b+26}" text-anchor="middle" style="animation-delay:${d+.1}s">${G.label}</text>`;});
+    if(s.foot)o+=`<text class="note cpop" x="${W/2}" y="${H-6}" text-anchor="middle" fill="var(--ink-faint)" style="animation-delay:${d+.3}s">${s.foot}</text>`;
+    return o+`</svg>`;},
+  rdd(){const W=520,H=300,p={t:24,r:18,b:42,l:24};let s=`<svg viewBox="0 0 ${W} ${H}" class="chart">`;
+    const x0=p.l,x1=W-p.r,cx=(x0+x1)/2,yb=H-p.b;
+    s+=`<line class="ax" x1="${x0}" y1="${yb}" x2="${x1}" y2="${yb}"/><line class="zero" x1="${cx}" y1="${p.t}" x2="${cx}" y2="${yb}"/>`;
     s+=`<text class="axlbl cpop" x="${cx}" y="${yb+24}" text-anchor="middle">ISS cutoff</text>`;
     s+=`<text class="axlbl cpop" x="${x1}" y="${yb+24}" text-anchor="end">firm performance →</text>`;
-    s+=`<text class="axlbl cpop" x="${x0-6}" y="${pad.t+2}">support</text>`;
-    s+=`<path class="draw" d="M ${x0+8} ${pad.t+150} L ${cx-3} ${pad.t+128}" stroke="var(--coral)" stroke-width="3.2" fill="none" stroke-linecap="round"/>`;
-    s+=`<path class="draw" d="M ${cx+3} ${pad.t+46} L ${x1-8} ${pad.t+24}" stroke="var(--green)" stroke-width="3.2" fill="none" stroke-linecap="round" style="animation-delay:.3s"/>`;
-    s+=`<text class="vlbl cpop" x="${x0+30}" y="${pad.t+178}" fill="var(--coral)" style="animation-delay:.7s">ISS “AGAINST”</text>`;
-    s+=`<text class="vlbl cpop" x="${x1-30}" y="${pad.t+14}" text-anchor="end" fill="var(--green)" style="animation-delay:.7s">ISS “FOR”</text>`;
-    s+=`<line class="cpop" x1="${cx+14}" y1="${pad.t+128}" x2="${cx+14}" y2="${pad.t+48}" stroke="var(--ink-soft)" stroke-width="1.4" marker-end="url(#ar)" marker-start="url(#ar)" style="animation-delay:.95s"/>`;
-    s+=`<text class="cpop" x="${cx+22}" y="${pad.t+82}" font-family="var(--mono)" font-size="13" fill="var(--gold)" style="animation-delay:1.05s">the jump</text>`;
-    s+=`<text class="cpop" x="${cx+22}" y="${pad.t+100}" font-family="var(--mono)" font-size="13" fill="var(--gold)" style="animation-delay:1.1s">causal effect</text>`;
-    s+=`<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink-soft)"/></marker></defs>`;
-    return s+`</svg>`;
-  },
-  line(spec){
-    const W=520,H=spec.h||300,pad={t:24,r:18,b:44,l:30}; const xr=spec.xr,yr=spec.yr;
-    const X=x=>pad.l+(x-xr[0])/(xr[1]-xr[0])*(W-pad.l-pad.r); const Y=y=>H-pad.b-(y-yr[0])/(yr[1]-yr[0])*(H-pad.t-pad.b);
-    let s=`<svg viewBox="0 0 ${W} ${H}" class="chart">`; const yb=Y(yr[0]);
-    s+=`<line class="ax" x1="${pad.l}" y1="${yb}" x2="${W-pad.r}" y2="${yb}"/><line class="ax" x1="${X(0)}" y1="${pad.t}" x2="${X(0)}" y2="${yb}"/>`;
-    if(spec.baseline!=null){const by=Y(spec.baseline);s+=`<line class="zero" x1="${pad.l}" y1="${by}" x2="${W-pad.r}" y2="${by}"/><text class="axlbl cpop" x="${pad.l+4}" y="${by-6}">baseline</text>`;}
-    if(spec.event)s+=`<text class="axlbl cpop" x="${X(0)}" y="${yb+24}" text-anchor="middle">${spec.event}</text>`;
-    if(spec.xlabel)s+=`<text class="axlbl cpop" x="${W-pad.r}" y="${yb+24}" text-anchor="end">${spec.xlabel}</text>`;
-    if(spec.ylabel)s+=`<text class="axlbl cpop" x="${pad.l-8}" y="${pad.t+2}">${spec.ylabel}</text>`;
-    const P=spec.pts.map(p=>[X(p[0]),Y(p[1])]); let d=`M ${P[0][0]} ${P[0][1]}`;
+    s+=`<text class="axlbl cpop" x="${x0-6}" y="${p.t+2}">support</text>`;
+    s+=`<path class="draw" d="M ${x0+8} ${p.t+150} L ${cx-3} ${p.t+128}" stroke="var(--coral)" stroke-width="3.2" fill="none" stroke-linecap="round"/>`;
+    s+=`<path class="draw" d="M ${cx+3} ${p.t+46} L ${x1-8} ${p.t+24}" stroke="var(--green)" stroke-width="3.2" fill="none" stroke-linecap="round" style="animation-delay:.3s"/>`;
+    s+=`<text class="vlbl cpop" x="${x0+30}" y="${p.t+178}" fill="var(--coral)" style="animation-delay:.7s">ISS “AGAINST”</text>`;
+    s+=`<text class="vlbl cpop" x="${x1-30}" y="${p.t+14}" text-anchor="end" fill="var(--green)" style="animation-delay:.7s">ISS “FOR”</text>`;
+    s+=`<line class="cpop" x1="${cx+14}" y1="${p.t+128}" x2="${cx+14}" y2="${p.t+48}" stroke="var(--ink-faint)" stroke-width="1.4" marker-end="url(#ar)" marker-start="url(#ar)" style="animation-delay:.95s"/>`;
+    s+=`<text class="cpop" x="${cx+22}" y="${p.t+96}" font-family="var(--mono)" font-size="13" fill="var(--gold)" style="animation-delay:1.05s">causal ≈ 25 pp</text>`;
+    s+=`<defs><marker id="ar" markerWidth="7" markerHeight="7" refX="3.5" refY="3.5" orient="auto"><path d="M0,0 L7,3.5 L0,7 z" fill="var(--ink-faint)"/></marker></defs>`;
+    return s+`</svg>`;},
+  line(s){const W=520,H=s.h||300,p={t:24,r:18,b:44,l:30},xr=s.xr,yr=s.yr,
+    X=x=>p.l+(x-xr[0])/(xr[1]-xr[0])*(W-p.l-p.r),Y=y=>H-p.b-(y-yr[0])/(yr[1]-yr[0])*(H-p.t-p.b);
+    let o=`<svg viewBox="0 0 ${W} ${H}" class="chart">`;const yb=Y(yr[0]);
+    o+=`<line class="ax" x1="${p.l}" y1="${yb}" x2="${W-p.r}" y2="${yb}"/><line class="ax" x1="${X(0)}" y1="${p.t}" x2="${X(0)}" y2="${yb}"/>`;
+    if(s.baseline!=null){const by=Y(s.baseline);o+=`<line class="zero" x1="${p.l}" y1="${by}" x2="${W-p.r}" y2="${by}"/><text class="axlbl cpop" x="${p.l+4}" y="${by-6}">baseline</text>`;}
+    if(s.event)o+=`<text class="axlbl cpop" x="${X(0)}" y="${yb+24}" text-anchor="middle">${s.event}</text>`;
+    if(s.xlabel)o+=`<text class="axlbl cpop" x="${W-p.r}" y="${yb+24}" text-anchor="end">${s.xlabel}</text>`;
+    if(s.ylabel)o+=`<text class="axlbl cpop" x="${p.l-8}" y="${p.t+2}">${s.ylabel}</text>`;
+    const P=s.pts.map(q=>[X(q[0]),Y(q[1])]);let d=`M ${P[0][0]} ${P[0][1]}`;
     for(let i=0;i<P.length-1;i++){const a=P[i],b=P[i+1],mx=(a[0]+b[0])/2;d+=` C ${mx} ${a[1]} ${mx} ${b[1]} ${b[0]} ${b[1]}`;}
-    s+=`<path class="draw" d="${d}" stroke="${spec.color}" stroke-width="3.2" fill="none" stroke-linecap="round"/>`;
-    if(spec.anno)spec.anno.forEach((a,i)=>{s+=`<text class="vlbl cpop" x="${X(a.x)}" y="${Y(a.y)}" text-anchor="${a.anchor||'middle'}" fill="${a.color||spec.color}" style="animation-delay:${1+i*.15}s">${a.t}</text>`;});
-    return s+`</svg>`;
-  },
-  curves(spec){
-    const W=520,H=spec.h||300,pad={t:20,r:20,b:44,l:34}; const xr=spec.xr,yr=spec.yr;
-    const X=x=>pad.l+(x-xr[0])/(xr[1]-xr[0])*(W-pad.l-pad.r); const Y=y=>H-pad.b-(y-yr[0])/(yr[1]-yr[0])*(H-pad.t-pad.b);
-    let s=`<svg viewBox="0 0 ${W} ${H}" class="chart">`; const zeroY=Y(0);
-    s+=`<line class="ax" x1="${pad.l}" y1="${zeroY}" x2="${W-pad.r}" y2="${zeroY}"/><line class="ax" x1="${X(xr[0])}" y1="${pad.t}" x2="${X(xr[0])}" y2="${H-pad.b}"/>`;
-    if(spec.ylabel)s+=`<text class="axlbl cpop" x="${X(xr[0])-6}" y="${pad.t+2}">${spec.ylabel}</text>`;
-    if(spec.xlabel)s+=`<text class="axlbl cpop" x="${W-pad.r}" y="${zeroY+24}" text-anchor="end">${spec.xlabel}</text>`;
-    spec.curves.forEach((c,ci)=>{let d="",first=true;
-      for(let i=0;i<=80;i++){const xx=c.dom[0]+(c.dom[1]-c.dom[0])*i/80;const yy=c.f(xx);d+=(first?'M':'L')+` ${X(xx).toFixed(1)} ${Y(yy).toFixed(1)} `;first=false;}
-      s+=`<path class="draw" d="${d}" stroke="${c.color}" stroke-width="3.2" fill="none" stroke-linecap="round" style="animation-delay:${ci*.3}s"/>`;
-      if(c.label)s+=`<text class="vlbl cpop" x="${X(c.lx)}" y="${Y(c.ly)}" text-anchor="middle" fill="${c.color}" style="animation-delay:${.8+ci*.2}s">${c.label}</text>`;
-      if(c.dot)s+=`<circle class="dot0" cx="${X(c.dot[0])}" cy="${Y(c.dot[1])}" r="4.5" fill="${c.color}" style="animation-delay:${1+ci*.2}s"/>`;});
-    if(spec.vmark!=null){s+=`<line class="zero cpop" x1="${X(spec.vmark)}" y1="${zeroY}" x2="${X(spec.vmark)}" y2="${Y(spec.vmarkTop||yr[1])}" style="animation-delay:1.1s"/><text class="axlbl cpop" x="${X(spec.vmark)}" y="${zeroY+20}" text-anchor="middle" style="animation-delay:1.1s">${spec.vmarkLbl||''}</text>`;}
-    return s+`</svg>`;
-  },
-  phase(){
-    const W=520,H=320,pad={t:18,r:18,b:46,l:46}; const x0=pad.l,x1=W-pad.r,y0=pad.t,y1=H-pad.b;
+    o+=`<path class="draw" d="${d}" stroke="${s.color}" stroke-width="3.2" fill="none" stroke-linecap="round"/>`;
+    if(s.anno)s.anno.forEach((a,i)=>{o+=`<text class="vlbl cpop" x="${X(a.x)}" y="${Y(a.y)}" text-anchor="${a.anchor||'middle'}" fill="${a.color||s.color}" style="animation-delay:${1+i*.15}s">${a.t}</text>`;});
+    return o+`</svg>`;},
+  curves(s){const W=520,H=s.h||300,p={t:20,r:20,b:44,l:34},xr=s.xr,yr=s.yr,
+    X=x=>p.l+(x-xr[0])/(xr[1]-xr[0])*(W-p.l-p.r),Y=y=>H-p.b-(y-yr[0])/(yr[1]-yr[0])*(H-p.t-p.b);
+    let o=`<svg viewBox="0 0 ${W} ${H}" class="chart">`;const z=Y(0);
+    o+=`<line class="ax" x1="${p.l}" y1="${z}" x2="${W-p.r}" y2="${z}"/><line class="ax" x1="${X(xr[0])}" y1="${p.t}" x2="${X(xr[0])}" y2="${H-p.b}"/>`;
+    if(s.ylabel)o+=`<text class="axlbl cpop" x="${X(xr[0])-6}" y="${p.t+2}">${s.ylabel}</text>`;
+    if(s.xlabel)o+=`<text class="axlbl cpop" x="${W-p.r}" y="${z+24}" text-anchor="end">${s.xlabel}</text>`;
+    s.curves.forEach((c,ci)=>{let d="",f=true;for(let i=0;i<=80;i++){const xx=c.dom[0]+(c.dom[1]-c.dom[0])*i/80;d+=(f?'M':'L')+` ${X(xx).toFixed(1)} ${Y(c.f(xx)).toFixed(1)} `;f=false;}
+      o+=`<path class="draw" d="${d}" stroke="${c.color}" stroke-width="3.2" fill="none" stroke-linecap="round" style="animation-delay:${ci*.3}s"/>`;
+      if(c.label)o+=`<text class="vlbl cpop" x="${X(c.lx)}" y="${Y(c.ly)}" text-anchor="middle" fill="${c.color}" style="animation-delay:${.8+ci*.2}s">${c.label}</text>`;});
+    return o+`</svg>`;},
+  phase(){const W=520,H=320,p={t:18,r:18,b:46,l:46},x0=p.l,x1=W-p.r,y0=p.t,y1=H-p.b;
     let s=`<svg viewBox="0 0 ${W} ${H}" class="chart">`;
     s+=`<clipPath id="pl"><rect x="${x0}" y="${y0}" width="${x1-x0}" height="${y1-y0}"/></clipPath><g clip-path="url(#pl)">`;
-    s+=`<path class="cpop" d="M ${x0} ${y0} L ${x1} ${y0} L ${x1} ${y1} L ${x0+160} ${y1} C ${x0+150} ${y0+120} ${x0+260} ${y0+70} ${x1} ${y0+40} Z" fill="rgba(116,199,158,.13)" style="animation-delay:.1s"/>`;
-    s+=`<path class="cpop" d="M ${x0} ${y0+70} C ${x0+150} ${y0+120} ${x0+150} ${y0+120} ${x0+160} ${y1} L ${x0} ${y1} Z" fill="rgba(229,132,104,.13)" style="animation-delay:.15s"/>`;
+    s+=`<path class="cpop" d="M ${x0} ${y0} L ${x1} ${y0} L ${x1} ${y1} L ${x0+160} ${y1} C ${x0+150} ${y0+120} ${x0+260} ${y0+70} ${x1} ${y0+40} Z" fill="rgba(118,204,162,.16)" style="animation-delay:.1s"/>`;
+    s+=`<path class="cpop" d="M ${x0} ${y0+70} C ${x0+150} ${y0+120} ${x0+150} ${y0+120} ${x0+160} ${y1} L ${x0} ${y1} Z" fill="rgba(232,138,110,.14)" style="animation-delay:.15s"/>`;
     s+=`<path class="draw" d="M ${x0} ${y0+70} C ${x0+150} ${y0+120} ${x0+260} ${y0+70} ${x1} ${y0+40}" stroke="var(--gold)" stroke-width="2.2" fill="none"/></g>`;
     s+=`<line class="ax" x1="${x0}" y1="${y1}" x2="${x1}" y2="${y1}"/><line class="ax" x1="${x0}" y1="${y0}" x2="${x0}" y2="${y1}"/>`;
     s+=`<text class="vlbl cpop" x="${x1-12}" y="${y0+30}" text-anchor="end" fill="var(--green)" style="animation-delay:.6s">FORECLOSED</text>`;
     s+=`<text class="clbl cpop" x="${x1-12}" y="${y0+48}" text-anchor="end" font-size="11" style="animation-delay:.65s">minority protected</text>`;
     s+=`<text class="vlbl cpop" x="${x0+14}" y="${y1-44}" fill="var(--coral)" style="animation-delay:.6s">CONTESTED</text>`;
     s+=`<text class="clbl cpop" x="${x0+14}" y="${y1-26}" font-size="11" style="animation-delay:.65s">capture belief-dependent</text>`;
-    [[.62,.78,'index-heavy'],[.30,.46,'mid-liquid'],[.16,.24,'founder-led']].forEach((p,i)=>{const cx=x0+(x1-x0)*p[0],cy=y1-(y1-y0)*p[1];
-      s+=`<circle class="dot0" cx="${cx}" cy="${cy}" r="4" fill="var(--ink)" style="animation-delay:${.9+i*.12}s"/><text class="clbl cpop" x="${cx+8}" y="${cy+4}" font-size="11.5" style="animation-delay:${1+i*.12}s">${p[2]}</text>`;});
     s+=`<text class="axlbl" x="${(x0+x1)/2}" y="${y1+26}" text-anchor="middle">locked ownership →</text>`;
     s+=`<text class="axlbl" x="${x0-30}" y="${(y0+y1)/2}" text-anchor="middle" transform="rotate(-90 ${x0-30} ${(y0+y1)/2})">liquidity →</text>`;
-    return s+`</svg>`;
-  }
+    return s+`</svg>`;}
+};
+const CHARTS={
+  signflip:()=>C.bars({h:300,max:1,min:-2,ylabel:"effect on value",groups:[
+    {label:"OLS (raw)",bars:[{v:.62,label:"+",color:"var(--green)"}]},{label:"Firm FE",bars:[{v:-.42,label:"−",color:"var(--coral)"}]},
+    {label:"IV (causal)",bars:[{v:-1.5,label:"− −",color:"var(--coral)"}]}],foot:"correlation +  ⇒  causal −"}),
+  payluck:()=>C.bars({h:300,max:2.4,min:0,ylabel:"pay sensitivity",groups:[
+    {label:"Accounting",bars:[{v:.82,label:".82",color:"var(--teal)"},{v:2.15,label:"2.15",color:"var(--coral)"}]},
+    {label:"Market",bars:[{v:.38,label:".38",color:"var(--teal)"},{v:.35,label:".35",color:"var(--coral)"}]}],foot:"teal = skill · coral = luck · market: luck ≈ skill"}),
+  rdd:()=>C.rdd(),
+  activism:()=>C.line({h:300,xr:[-20,20],yr:[0,8],event:"0 = 13D filing",xlabel:"event day",ylabel:"cum. abnormal return",color:"var(--green)",
+    pts:[[-20,.3],[-12,.5],[-6,1.4],[-1,3.4],[0,5.2],[2,6.3],[8,7],[14,7.2],[20,7.2]],anno:[{x:11,y:5.6,t:"+7%, no reversal",color:"var(--green)"}]}),
+  strategic:()=>C.bars({h:300,max:26,min:0,ylabel:"ESG fund's EXTRA support (pp)",groups:[
+    {label:"vote NOT decisive",bars:[{v:22,label:"+22 pp",color:"var(--green)"}]},{label:"vote decisive",bars:[{v:9,label:"+9 pp",color:"var(--coral)"}]}],foot:"extra support drops ≈ 60% when pivotal"}),
+  engagement:()=>C.bars({h:300,max:8,min:0,ylabel:"1-yr abnormal return",groups:[
+    {label:"success",bars:[{v:7,label:"+7%",color:"var(--green)"}]},{label:"average",bars:[{v:2,label:"+2%",color:"var(--teal)"}]},
+    {label:"failure",bars:[{v:.12,label:"≈ 0",color:"var(--ink-faint)"}]}],foot:"upside if it works · no downside if it doesn't"}),
+  volume:()=>C.line({h:300,xr:[-20,20],yr:[0,22],event:"meeting",xlabel:"event day",ylabel:"abnormal volume",baseline:3.5,color:"var(--teal)",
+    pts:[[-20,3.5],[-10,12],[-2,12.6],[0,19.4],[1,19.7],[5,18],[10,12.5],[15,6],[20,3.5]],anno:[{x:6,y:21,t:"peak ≈ 20%",color:"var(--teal)"}]}),
+  gim:()=>C.curves({h:300,xr:[0,1],yr:[-1.1,.9],ylabel:"firm value",xlabel:"insider stake",curves:[
+     {f:x=>4*(0.94*x-1.44*x*x),dom:[0,.55],color:"var(--green)",label:"cash-flow (incentive)",lx:.24,ly:.78},
+     {f:x=>4*(-1.06*x+1.17*x*x),dom:[0,.85],color:"var(--coral)",label:"voting (entrenchment)",lx:.66,ly:-.86}]}),
+  phase:()=>C.phase()
 };
 
-/* ============================ ANSWERS (gated — stripped in the before-class edition) ============================ */
-const ANSWERS = {}; // answers stripped in the before-class edition
-/* ============================ DOCUMENT (ordered) ============================ */
-const DOC = [
- {stage:null,kicker:"Part 0 · The hook",title:"Who actually <em>decides</em> what a company does?",
-  lead:"<strong>ExxonMobil, May 2021.</strong> A brand-new hedge fund — Engine No. 1 — owned about <span class='hl'>0.02%</span> of Exxon. It nominated four directors on a decarbonisation platform.",
-  body:`<div class="block predict"><div class="bh">Before I tell you what happened — predict</div><p>How many of the twelve board seats did a <strong>0.02%</strong> owner win?</p><div class="guess">0 &nbsp;·&nbsp; 1 &nbsp;·&nbsp; 3 &nbsp;·&nbsp; none — it's hopeless?</div></div>`,
-  revealRef:"HOOK",revealLabel:"What happened?",revealQ:"How many of the twelve seats did a 0.02% owner win?"},
- {stage:null,kicker:"The thesis",title:"Governance is the <em>transmission mechanism</em>.",
-  body:`<p style="font-size:23px;line-height:1.5;color:var(--ink)">The “G” is not a third silo beside E and S. It is the <span class="hl">machinery</span> that turns preferences — for profit, for the planet, for workers — into what the firm actually does.</p>
-  <div style="margin-top:24px;font-family:var(--mono);font-size:15px;color:var(--ink-soft);letter-spacing:.04em;line-height:2.1">Preferences (owners, society)<br><span style="color:var(--gold)">↓&nbsp; boards · voting · blockholders</span><br><strong style="color:var(--ink)">Corporate action</strong> (E, S, returns)</div>
-  <div class="block" style="margin-top:24px"><p style="font-size:18px">At several points I'll <strong>ask you to predict</strong> — a yes/no, a number, a guess. Then we see what a top finance paper found. Then a <em>conclusive</em> answer.</p></div>`},
+/* mount charts */
+document.querySelectorAll(".chart-slot").forEach(el=>{const k=el.dataset.chart;if(CHARTS[k])el.innerHTML=CHARTS[k]();});
 
- {kind:"divider",num:"Part 1",title:"Foundations:<br>the <em>agency</em> problem",sub:"Why ownership ≠ control is the root of everything that follows.",on:1},
- {stage:null,kicker:"Berle &amp; Means · 1932",title:"The root: ownership ≠ control.",
-  body:`<ul class="clean"><li>Ownership is <strong>dispersed</strong> across many small shareholders</li><li>Control sits with <strong>professional managers</strong> who own little</li><li>Their interests are <em>not</em> automatically aligned</li></ul>
-  <div class="block" style="margin-top:18px"><p>Every governance tool exists to bridge the gap between those who <em>own</em> and those who <em>decide</em>.</p></div>`},
- {stage:null,kicker:"Jensen &amp; Meckling · JFE 1976",title:"Agency costs.",
-  body:`<ul class="clean"><li><strong>Monitoring</strong> — boards, auditors, analysts watching managers</li><li><strong>Bonding</strong> — managers credibly committing (debt, pay at risk)</li><li><strong>Residual loss</strong> — value still lost despite both</li></ul>
-  <p style="margin-top:18px;font-style:italic;font-size:21px;color:var(--ink-soft)">“Corporate governance deals with the ways in which suppliers of finance assure themselves of getting a return.” <span class="mono" style="font-style:normal;color:var(--ink-faint)">— Shleifer &amp; Vishny, JF 1997</span></p>`},
- {stage:null,kicker:"The toolkit",title:"Six levers.",
-  body:`<div class="two-col"><ul class="clean"><li><strong>Boards</strong> — delegated monitors</li><li><strong>Shareholder voting</strong> — collective choice</li><li><strong>Blockholders</strong> — monitor or exit</li></ul>
-  <ul class="clean"><li class="t"><strong>Market for control</strong> — takeovers, activists</li><li class="t"><strong>Disclosure</strong> — transparency, audits</li><li class="t"><strong>Incentives</strong> — executive pay</li></ul></div>
-  <div class="block" style="margin-top:16px"><p style="font-size:18px">Levers 1–2 — <strong>boards</strong> and <strong>voting</strong> — are where ESG actually gets decided. Each ultimately runs on <span class="hl">shareholders</span>.</p></div>`},
- {stage:null,kicker:"Boards",title:"The apex control body — or a rubber stamp?",
-  body:`<ul class="clean"><li>Hire, pay, and <strong>fire</strong> the CEO; ratify strategy; oversee risk</li><li>Owe <strong>fiduciary duties</strong> — of care and loyalty — to shareholders</li><li><strong>Independence</strong>: outside directors meant to monitor, not collude</li></ul>
-  <p style="margin-top:16px;color:var(--ink-soft)">Modern theory says the picture is subtler than “CEO-captured”: how a board <em>communicates</em>, and even productive <em>disagreement</em>, can raise value. <span class="mono">(Malenko RFS 2014; Donaldson–Malenko–Piacentino RFS 2020)</span></p>`},
-
- {stage:"predict",arc:"M1 · Board diversity",title:"Should a firm put more women on its board?",
-  body:`<p class="u-lead">A board is 90% male. A proposal would add several women directors.</p>
-  <div class="block predict big"><div class="bh">Two questions — commit before we look</div><p style="margin-bottom:8px">1 · Does board gender diversity <strong>improve firm performance</strong>? <span class="guess">yes / no / depends</span></p><p>2 · Would a <strong>gender quota</strong> raise or lower firm value? <span class="guess">up / down / no effect</span></p></div>`},
- {stage:"discuss",arc:"M1 · Board diversity",title:"What might be true — and how would we know?",
-  body:`<div class="two-col"><div><div class="col-h">“Yes, it helps”</div><ul class="clean"><li class="g">more independent monitoring</li><li class="g">diversity of information</li><li class="g">less group-think / capture</li></ul></div>
-  <div><div class="col-h">“No / it depends”</div><ul class="clean"><li class="c">tokenism; constrained search</li><li class="c">firms that add women may already differ</li><li class="c">correlation ≠ causation</li></ul></div></div>
-  <div class="block warn"><div class="bh">The identification trap</div><p style="font-size:18px">“Diverse boards = better firms” could just mean <em>good firms add women</em>. A causal answer must strip out that selection.</p></div>`},
- {answers:"M1",teaser:{q:"Do women on boards improve firm performance? Would a quota help?",paper:"Adams &amp; Ferreira, JFE 2009"}},
-
- {stage:null,kicker:"Incentives",title:"Executive pay — align, or symptom?",
-  body:`<ul class="clean"><li>Textbook purpose: <strong>pay-for-performance</strong> aligns managers with owners</li><li class="c">But pay can be a <em>symptom</em> of weak governance — a captured committee</li><li class="t"><strong>Say-on-pay</strong>: shareholders' advisory vote — our first taste of voting</li></ul>`},
- {stage:"predict",arc:"M2 · CEO pay-for-luck",title:"The oil CEO and the lucky barrel.",
-  body:`<p class="u-lead">An oil company's stock doubles. The reason: the <em>world oil price</em> doubled — nothing the CEO did.</p>
-  <div class="block predict"><div class="bh">Predict</div><p>Does the CEO's pay rise with the windfall? And if so, how much relative to pay for performance he actually <em>caused</em>?</p><div class="guess">none &nbsp;·&nbsp; some &nbsp;·&nbsp; just as much</div></div>`},
- {answers:"M2",teaser:{q:"Are CEOs paid for luck — and does governance change that?",paper:"Bertrand &amp; Mullainathan, QJE 2001"}},
- {stage:null,kicker:"Part 1 · takeaway",title:"Every lever runs on shareholders.",
-  body:`<ul class="clean" style="font-size:20px"><li>Governance exists because <strong>ownership ≠ control</strong></li><li>A toolkit of six levers manages the resulting agency costs</li><li>Boards are real, subtle bodies — but <strong>every lever runs on shareholders</strong></li></ul>`},
-
- {kind:"divider",num:"Part 2",title:"Shareholders &amp; voting:<br>the <em>heart</em>",sub:"Power has concentrated in institutions, advisors, and the vote.",on:2},
- {stage:null,kicker:"The institutional era",title:"Who owns the modern firm?",
-  body:`<ul class="clean"><li>The <strong>Big Three</strong> (BlackRock, Vanguard, State Street) cast a large, fast-growing share of votes</li><li>Mostly <strong>index funds</strong>: they hold “the market” and cannot sell — so <span class="hl">voice</span>, not exit, is their lever</li></ul>
-  <div class="block" style="margin-top:18px"><p>If the biggest owners are <em>passive</em> by construction, are they also <em>passive owners</em>? We test it next.</p></div>`},
- {stage:null,kicker:"The stewardship paradox",title:"Worry vs. evidence.",
-  body:`<div class="two-col"><div><div class="col-h">The worry</div><ul class="clean"><li class="c">enormous voting power, <strong>weak incentives</strong>: tiny fees, shared gains</li><li class="c">⇒ possible under-investment in stewardship</li></ul></div>
-  <div><div class="col-h">The evidence</div><ul class="clean"><li class="g"><strong>Appel, Gormley &amp; Keim (JFE 2016)</strong>: more passive ownership ⇒ more independent directors, fewer poison pills, less dual-class</li><li class="g">“Passive investors, <span class="hl-g">not</span> passive owners”</li></ul></div></div>`},
- {stage:null,kicker:"Mechanics",title:"How a shareholder vote actually works.",
-  body:`<ul class="clean"><li><strong>Proxy statement</strong> (DEF 14A) lays out the ballot</li><li><strong>Record date</strong> fixes <em>who</em> is eligible to vote</li><li><strong>Annual meeting</strong> — votes cast, mostly by proxy</li><li><strong>Results</strong> disclosed (8-K)</li></ul>
-  <div class="block warn" style="margin-top:16px"><div class="bh">Remember the record date</div><p style="font-size:18px">Eligibility is set on one day — but shares trade <em>every</em> day. We return to this in Part 4.</p></div>`},
- {stage:null,kicker:"Blockholders",title:"Voice vs. exit.",
-  body:`<p class="u-lead">A large owner can <span class="hl">monitor</span> (voice) or <span class="hl-t">sell</span> (exit) — both can discipline managers. <span class="mono">(Hirschman 1970; Edmans JF 2009)</span></p>
-  <div class="block"><div class="bh">A classic result · Maug, JF 1998</div><p>Market <em>liquidity</em> can <em>help</em> monitoring — it lets a blockholder quietly build a stake and profit from improving the firm. Liquidity and control aren't always a trade-off.</p></div>`},
-
- {stage:"predict",arc:"M4 · Hedge-fund activism",title:"The activist arrives — built, or stripped?",
-  body:`<p class="u-lead">A hedge fund quietly buys ~6% of a sleepy firm, files a 13D, and demands change — sell a division, change the board, return cash.</p>
-  <div class="block predict"><div class="bh">Predict the next 12 months</div><p>Does the target's stock rise (discipline), fall (raiders strip value), or pop then revert (overreaction)?</p></div>`},
- {answers:"M4",teaser:{q:"Does activism build long-term value, or strip it?",paper:"Brav, Jiang, Partnoy &amp; Thomas, JF 2008"}},
-
- {stage:null,kicker:"Proxy advisors",title:"ISS &amp; Glass Lewis.",
-  body:`<ul class="clean"><li>Dispersed owners can't research thousands of ballot items ⇒ they <span class="hl">buy recommendations</span></li><li>Two firms dominate. ISS alone covers ~40,000 meetings in 115 countries for 1,600+ clients</li><li>Kingmakers, or useful intermediaries? A live policy fight</li></ul>`},
- {stage:"predict",arc:"M3 · Proxy advisors",title:"How much does ISS actually move a vote?",
-  body:`<p class="u-lead">ISS flips its recommendation on a say-on-pay proposal from <strong>FOR</strong> to <strong>AGAINST</strong>.</p>
-  <div class="block predict big"><div class="bh">By how many percentage points does support fall?</div><div class="guess" style="font-size:19px"><b>0</b> &nbsp;·&nbsp; a few &nbsp;·&nbsp; <b>10?</b> &nbsp;·&nbsp; <b>25?</b> &nbsp;·&nbsp; <b>40?</b></div></div>`},
- {answers:"M3",teaser:{q:"How many points does an ISS “against” really move a vote?",paper:"Malenko &amp; Shen, RFS 2016"}},
- {stage:null,kicker:"Part 2 · takeaway",title:"The vote is the channel.",
-  body:`<ul class="clean" style="font-size:20px"><li>Voting power has <strong>concentrated</strong> in institutions and intermediaries — and they <em>use</em> it</li><li>The <strong>vote</strong> is the channel through which owners' preferences — financial <em>and</em> ESG — reach the firm</li></ul>`},
-
- {kind:"divider",num:"Part 3",title:"Governance × ESG",sub:"How E&amp;S preferences become corporate action — and where the machine is gamed.",on:3},
- {stage:null,kicker:"Two channels",title:"Voice and vote.",
-  body:`<p style="font-size:23px;color:var(--ink);line-height:1.5">E&amp;S preferences reach the firm through <span class="hl">engagement</span> (voice) and <span class="hl-t">voting</span>. In both, <strong>governance quality</strong> decides whether a preference becomes corporate <em>action</em> — or just a press release.</p>`},
- {stage:null,kicker:"E&amp;S on the ballot",title:"Proposals &amp; say-on-climate.",
-  body:`<ul class="clean"><li>Rule 14a-8 proposals on <strong>climate</strong>, <strong>diversity</strong>, political spending</li><li>“Say-on-climate” advisory votes on transition plans</li><li>The 2021 high-water mark: Engine No. 1 vs. Exxon — our opening story</li></ul>`},
- {stage:null,kicker:"The reversal",title:"Declining E&amp;S support.",
-  body:`<ul class="clean"><li class="c">Support for E&amp;S proposals has <strong>fallen</strong> since 2021</li><li class="c">Politics: anti-ESG state laws; the Big Three stepping back; a wave of (often vague) anti-ESG proposals</li></ul>
-  <p style="margin-top:14px;font-style:italic;color:var(--ink-soft)">Fatigue, capture, backlash, or a changing owner mix? An open empirical question.</p>`},
-
- {stage:"predict",arc:"M5 · Strategic ESG voting",title:"Do “ESG” funds vote their values?",
-  body:`<p class="u-lead">A fund markets itself as an ESG champion. A climate proposal comes to a vote.</p>
-  <div class="block predict"><div class="bh">Predict — the counterintuitive bit</div><p>When the fund's vote would actually <strong>decide</strong> the outcome, does it vote yes <em>more</em> often, or <em>less</em>?</p><div class="guess">more (consistent) &nbsp;·&nbsp; same &nbsp;·&nbsp; less (strategic)</div></div>`},
- {answers:"M5",teaser:{q:"Do “ESG” funds vote their values when the vote is pivotal?",paper:"Michaely, Ordóñez-Calafí &amp; Rubio, RF 2024"}},
- {stage:"predict",arc:"M6 · Engagement",title:"Does quiet engagement actually pay?",
-  body:`<p class="u-lead">A large fund engages management privately on an ESG issue — no proxy fight, just pressure.</p>
-  <div class="block predict"><div class="bh">Predict the payoff</div><p>Always pays · pays only if it <em>succeeds</em> · never moves the stock?</p><div class="guess">and how often do they succeed? &nbsp; 1 in 2? &nbsp; 1 in 5? &nbsp; 1 in 20?</div></div>`},
- {answers:"M6",teaser:{q:"Does quiet ESG engagement actually pay — and how often?",paper:"Dimson, Karakaş &amp; Li, RFS 2015"}},
- {stage:null,kicker:"A caution · Bond &amp; Levit, JFE 2025",title:"Good for shareholders ≠ good for society.",
-  body:`<ul class="clean"><li>ESG and market power interact in non-obvious ways — pro-social pledges aren't always welfare-improving once market power is in play</li><li>So a successful engagement creating shareholder value is not automatically a <em>social-welfare</em> gain</li></ul>`},
- {stage:null,kicker:"The dark mirror",title:"Governance <em>failure</em> — this afternoon.",
-  body:`<p class="u-lead">When the machinery breaks, social and economic catastrophe follows.</p>
-  <div class="block warn"><div class="bh">African Bank (ABIL) · South Africa · 2014</div><p>Board capture; CEO hubris; concentrated high-risk unsecured lending to vulnerable borrowers. Collapse — with severe social fallout.</p></div>
-  <p style="margin-top:14px;font-family:var(--mono);font-size:13px;color:var(--ink-faint)">We dissect ABIL as a governance-failure case at 13:00.</p>`},
-
- {kind:"divider",num:"Part 4",title:"The frontier:<br><em>shareholder democracy</em>",sub:"The electorate is endogenous — people trade before they vote.",on:4},
- {stage:null,kicker:"Levit, Malenko &amp; Maug · JF 2024",title:"The electorate is <em>endogenous</em>.",
-  body:`<p style="font-size:23px;color:var(--ink);line-height:1.5">People <span class="hl">trade before they vote</span>. So <em>who owns the firm at the vote</em> is itself a choice — made in the market.</p>
-  <p style="margin-top:16px;font-style:italic;color:var(--ink-soft)">Recall the record date: trading reshuffles the electorate right up to it.</p>`},
- {stage:null,kicker:"Let's run it",title:"A 5-minute classroom market.",
-  body:`<ul class="clean"><li>Two rooms, A and B. Half <span class="hl">pro-change</span>, half status-quo.</li><li>Each gets 2 voting shares + cash; price 10; you may buy up to 2 more.</li><li>I tell <strong>A</strong>: “this will probably <em>pass</em>.” I tell <strong>B</strong>: “this will probably <em>fail</em>.”</li><li>Trade two minutes — then a <strong>share-weighted vote</strong>.</li></ul>
-  <div class="block"><p style="font-size:18px">Two identical rooms reach <em>different</em> outcomes — because the expectation reshuffled who owns the votes. The forecast didn't predict the result; it helped <span class="hl">create</span> it.</p></div>`},
- {stage:"predict",arc:"M7 · Post-meeting selling",title:"After the vote — who trades?",
-  body:`<p class="u-lead">You just simulated trading <em>before</em> a vote. Now look <em>after</em> a real, contentious meeting.</p>
-  <div class="block predict"><div class="bh">Predict</div><p>Who trades more once the result is known — the <strong>winners</strong> or the <strong>losers</strong>? And which direction do the losers go?</p><div class="guess">winners buy more &nbsp;·&nbsp; losers sell out &nbsp;·&nbsp; nobody trades</div></div>`},
- {answers:"M7",teaser:{q:"After a contentious vote, who trades — winners or losers?",paper:"Li, Maug &amp; Schwartz-Ziv, RFS 2022"}},
- {stage:null,kicker:"Why it breaks intuition",title:"Trading and voting reinforce each other.",
-  body:`<ul class="clean"><li>Self-fulfilling outcomes and <strong>multiple equilibria</strong></li><li class="c">Making trading <em>easier</em> can make shareholders <strong>worse off</strong></li><li class="c">A high <em>price</em> need not mean happy shareholders: price ≠ welfare</li></ul>`},
- {stage:null,kicker:"Levit, Malenko &amp; Maug · JF 2026",title:"What is a vote worth?",
-  body:`<ul class="clean"><li>A <strong>voting premium</strong> arises when blockholders reshape the electorate — <em>without any takeover</em></li><li>The <em>measured</em> premium does <strong>not</strong> equal the value of votes — it can even be <span class="hl-c">negative</span> (small holders free-ride)</li></ul>`},
- {stage:null,kicker:"Döttling, Levit, Malenko &amp; Rola-Janicka · RFS 2026",title:"Shareholders vs. citizens.",
-  body:`<ul class="clean"><li>Corporate “one share, one vote” meets political “one person, one vote”</li><li class="c">A shareholder push for pro-social policy can trigger <strong>political backlash</strong> that undoes it — and more diversified investors can intensify it</li></ul>`},
-
- {kind:"divider",num:"Part 5",title:"A live question:<br>dual-class <em>“sunset contests”</em>",sub:"Control without ownership — and how to make it expire.",on:5},
- {stage:"predict",arc:"M8 · Dual-class",title:"The share with no vote.",
-  body:`<p class="u-lead">Snap's IPO sold shares with <strong>zero</strong> votes. Google, Meta and Snap let founders keep <strong>voting control</strong> with a small cash-flow stake.</p>
-  <div class="block predict"><div class="bh">Predict — two questions</div><p style="margin-bottom:8px">1 · Pay <em>more</em> or <em>less</em> for a no-vote share? <span class="guess">(cash flows are identical)</span></p><p>2 · Is founder <strong>voting control</strong> good or bad for value?</p></div>`},
- {stage:"discuss",arc:"M8 · Dual-class",title:"Visionary founder, or unaccountable one?",
-  body:`<div class="two-col"><div><div class="col-h">Control is good</div><ul class="clean"><li class="g">protects a long-horizon founder</li><li class="g">shields R&amp;D from short-term markets</li><li class="g">“skin in the game”</li></ul></div>
-  <div><div class="col-h">Control is bad</div><ul class="clean"><li class="c">insulates from accountability</li><li class="c">entrenchment; pet projects</li><li class="c">minority can't discipline</li></ul></div></div>
-  <div class="block"><p style="font-size:18px">Separate <em>cash-flow</em> ownership (“skin in the game”) from <em>voting</em> control (“insulation”). They usually move together — dual-class <span class="hl">prises them apart</span>.</p></div>`},
- {answers:"M8",teaser:{q:"No-vote shares: is founder control good or bad for value?",paper:"Gompers-Ishii-Metrick (RFS 2010); Aggarwal et al. (JFE 2022)"}},
- {stage:null,kicker:"The sunset debate",title:"Make control <em>expire</em>.",
-  body:`<ul class="clean"><li>Investors (ISS, CII) push for <span class="hl">sunsets</span>: super-voting rights expire after ~7 years</li><li><strong>Bebchuk &amp; Kastiel</strong> name three designs — <em>fixed-time</em>, <em>triggering-event</em>, <em>ownership-percentage</em></li><li class="t">In 2023, S&amp;P <em>reversed</em> its ban on adding dual-class firms to its indexes</li></ul>`},
- {stage:null,kicker:"A live experiment",title:"The Trade Desk · 2020 &amp; 2025.",
-  body:`<p class="u-lead">The same firm extended its sunset <strong>twice</strong> — under two different rules:</p>
-  <ul class="clean"><li><strong>2020:</strong> extended under a <span class="hl">majority-of-the-minority</span> vote (only unaffiliated holders counted). Passed.</li><li><strong>2025:</strong> extended again under a <span class="hl-c">combined</span> vote where the founder's super-votes counted (a Nasdaq reprimand followed). Passed.</li></ul>
-  <p style="margin-top:16px;font-family:var(--display);font-size:21px;color:var(--ink)">Same founder, two rules, both passed. So what does the rule actually do?</p>`},
- {stage:"evidence",arc:"M8 · The pilot",title:"A model of the “sunset contest.”",figleft:true,chart:{fn:()=>C.phase()},
-  body:`<p>Under majority-of-minority the founder cannot vote his own shares — but he can <span class="hl">buy out</span> dissenters, whose shares then drop out of the protected minority.</p>
-  <ul class="clean" style="margin-top:14px"><li class="c"><strong>Time-based</strong> sunsets do <em>not</em> foreclose capture</li><li class="g">An <strong>ownership-band</strong> sunset <em>can</em> — it keeps the minority from being bought out</li></ul>`,
-  source:"Author's sunset-contest model (calibrated proof-of-concept; work in progress)."},
- {stage:"predict",arc:"M8 · The pilot",title:"Can a rule meant to <em>protect</em> the minority end up <em>hollowing</em> it?",
-  body:`<div class="block predict big"><div class="bh">The open research question</div><p>When does a sunset actually discipline a founder — and which sunset <em>design</em> is hardest to game?</p></div>
-  <ul class="clean" style="margin-top:14px"><li>Under a <strong>combined</strong> vote, a controlling founder wins almost by definition — the sunset barely binds.</li><li>Under <strong>majority-of-minority</strong>, he buys out the dissenters instead. <span class="hl">So which design works?</span></li></ul>
-  <p style="margin-top:16px;font-family:var(--display);font-size:21px;color:var(--gold)">This is my current research. Your thoughts?</p>`},
- {stage:null,kicker:"In one breath",title:"Five takeaways.",
-  body:`<ul class="clean" style="font-size:19px"><li>Governance is the <strong>transmission mechanism</strong> for E and S</li><li><strong>Ownership ≠ control</strong> ⇒ the agency problem ⇒ the toolkit</li><li class="t">Power sits with <strong>institutions, advisors, and the vote</strong> — and they use it</li><li class="g">The <strong>electorate is endogenous</strong> — voting is subtler than it looks; ESG votes can be gamed</li><li class="c">The frontier — <strong>dual-class sunsets</strong> — is live and unsolved</li></ul>`}
-];
-
-/* ============================ RENDER ============================ */
-const stageNames={predict:"Predict",discuss:"Discuss",evidence:"Evidence",verdict:"Verdict"};
-function stageLabel(s){if(!s.stage&&!s.kicker&&!s.arc)return"";
-  if(s.stage)return `<div class="stage ${s.stage}"><span class="tag">${stageNames[s.stage]||s.stage}</span><span class="arc">${s.arc||""}</span><span class="ln"></span></div>`;
-  return `<div class="stage"><span class="arc" style="color:var(--ink-faint)">${s.kicker||""}</span><span class="ln"></span></div>`;}
-function mcqHTML(s){if(MODE==="pre"||!s.mcq)return"";let inner=s.mcq.map(m=>`<div class="q">▸ ${m.q}</div><div class="a">✓ ${m.a}</div>`).join("");
-  return `<div class="mcq"><button class="mcq-btn" onclick="this.nextElementSibling.classList.toggle('show')">Exam question ▾</button><div class="mcq-body">${inner}</div></div>`;}
-function unit(s){
-  const fig=s.chart?`<div class="fig figure">${s.chart.fn()}</div>`:"";
-  const bodyhtml=`<div class="u-body">${s.body||""}</div>${mcqHTML(s)}`;
-  const inner = s.chart
-    ? `<div class="u-wrap">${s.title?`<div class="u-head"><h3 class="u-title">${s.title}</h3>${s.lead?`<p class="u-lead">${s.lead}</p>`:""}${bodyhtml}</div>`:bodyhtml}${fig}</div>`
-    : `${s.title?`<h3 class="u-title">${s.title}</h3>`:""}${s.lead?`<p class="u-lead">${s.lead}</p>`:""}${bodyhtml}`;
-  return `<div class="unit fx ${s.chart?'has-fig':''} ${s.figleft?'figleft':''} ${s.verdict?'verdict-unit':''}">${stageLabel(s)}${inner}${s.source?`<div class="source">${s.source}</div>`:""}</div>`;
-}
-function answerBlocks(arr){return arr.map(unit).join("");}
-function gate(html,label,q,wide){
-  if(MODE==="full") return html;
-  // during: reveal curtain
-  return `<div class="reveal ${wide?'wide':''} fx"><div class="curtain" onclick="this.parentNode.classList.add('open')">
-    <div class="cl">${label||"The evidence"}</div>${q?`<div class="cq">${q}</div>`:""}
-    <span class="cbtn">Reveal ↓</span><span class="chev">▾</span></div><div class="reveal-inner">${html}</div></div>`;
-}
-function teaser(t){return `<div class="teaser fx"><div class="seal"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></svg></div>
-  <div class="tq">${t.q}</div><div class="tsub">We predict now; the data &amp; the conclusive answer come live in class.</div>
-  <div class="tread">To pre-read · <b>${t.paper}</b></div></div>`;}
-
-const doc=document.getElementById("doc");let html="";let pips=0;
-DOC.forEach(s=>{
-  if(s.kind==="divider"){
-    pips=s.on;
-    let p="";for(let k=1;k<=5;k++)p+=`<i class="${k===s.on?'on':''}"></i>`;
-    html+=`<section class="divider fx" data-toc="${s.num}" data-on="${s.on}"><div class="num">${s.num}</div><h2>${s.title}</h2>${s.sub?`<div class="ds">${s.sub}</div>`:""}<div class="pips">${p}</div></section>`;
-    return;
-  }
-  if(s.answers){
-    const arc=ANSWERS[s.answers];
-    if(arc && MODE!=="pre") html+=`<div class="arc-answers">${gate(answerBlocks(arc), "The evidence &amp; verdict", s.teaser?s.teaser.q:"", true)}</div>`;
-    else html+=teaser(s.teaser);
-    return;
-  }
-  // normal content unit (may carry a gated reveal, e.g. the hook)
-  let u=unit(s);
-  if(s.revealRef){
-    const rev=ANSWERS[s.revealRef];
-    if(rev && MODE!=="pre"){
-      // append the gated reveal inside the unit's closing div
-      u = u.slice(0,-6) + gate(rev.map(r=>r.html).join(""), s.revealLabel, s.revealQ, false) + "</div>";
+/* edition gating */
+if(MODE!=="full"){
+  document.querySelectorAll("[data-reveal]").forEach(el=>{
+    if(MODE==="pre"){
+      const g=document.createElement("div");g.className="reveal-gate";
+      g.innerHTML='<div class="gl">Worked live in class</div><div class="gt">Commit to your prediction first — we build the evidence and the verdict together.</div>';
+      el.replaceWith(g);
+    }else{ // during: click to reveal
+      el.classList.add("answer","hide");
+      const g=document.createElement("div");g.className="reveal-gate";
+      g.innerHTML='<div class="gl">Reveal</div><div class="gt">Predictions in? Let’s see what the evidence says.</div><button>Show the evidence ›</button>';
+      el.before(g);
+      g.querySelector("button").onclick=()=>{el.classList.remove("hide");g.remove();el.querySelectorAll(".fx").forEach(f=>obs.observe(f));el.querySelectorAll(".chart-slot").forEach(s=>{const k=s.dataset.chart;if(CHARTS[k]&&!s.innerHTML)s.innerHTML=CHARTS[k]();});};
     }
-  }
-  html+=u;
-});
-doc.innerHTML=html;
-
-/* ============================ INTERACTIONS ============================ */
-// scroll reveal
-const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("shown");io.unobserve(e.target);}});},{threshold:.18,rootMargin:"0px 0px -8% 0px"});
-document.querySelectorAll(".fx").forEach(el=>io.observe(el));
-// observe charts that appear after a reveal opens
-function showInside(zone){zone.querySelectorAll(".fx").forEach(el=>{el.classList.add("shown");});}
-document.querySelectorAll(".reveal .curtain").forEach(c=>c.addEventListener("click",()=>{const z=c.parentNode;setTimeout(()=>showInside(z),50);}));
-
-// progress + toc
-const prog=document.getElementById("progress");
-const tocEl=document.getElementById("toc");
-const dividers=[...document.querySelectorAll(".divider")];
-let tnav="";dividers.forEach((d,i)=>{tnav+=`<a href="#" data-i="${i}"><span class="pip"></span><span class="lbl">${d.dataset.toc}</span></a>`;});
-tocEl.innerHTML=tnav;
-const tlinks=[...tocEl.querySelectorAll("a")];
-tlinks.forEach((a,i)=>a.addEventListener("click",e=>{e.preventDefault();dividers[i].scrollIntoView({behavior:"smooth"});}));
-function onScroll(){
-  const h=document.documentElement;const sc=h.scrollTop/(h.scrollHeight-h.clientHeight);
-  prog.style.width=(sc*100)+"%";
-  // active toc = last divider above mid-viewport
-  let act=-1;dividers.forEach((d,i)=>{if(d.getBoundingClientRect().top<window.innerHeight*0.4)act=i;});
-  tlinks.forEach((a,i)=>a.classList.toggle("on",i===act));
+  });
 }
-window.addEventListener("scroll",onScroll,{passive:true});window.addEventListener("resize",onScroll);onScroll();
 
-// keyboard: reveal next curtain with R / space when not scrolling much (during edition convenience)
-document.addEventListener("keydown",e=>{
-  if((e.key==="r"||e.key==="R")&&MODE==="during"){const c=[...document.querySelectorAll(".reveal:not(.open) .curtain")].find(c=>{const r=c.getBoundingClientRect();return r.top<window.innerHeight*0.8&&r.bottom>0;});if(c){c.parentNode.classList.add("open");setTimeout(()=>showInside(c.parentNode),50);}}
-});
+/* scroll-reveal */
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");obs.unobserve(e.target);}}),{threshold:.18,rootMargin:"0px 0px -8% 0px"});
+document.querySelectorAll(".fx").forEach(el=>obs.observe(el));
+const figo=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("in");figo.unobserve(e.target);}}),{threshold:.25,rootMargin:"0px 0px -6% 0px"});
+document.querySelectorAll("figure").forEach(f=>figo.observe(f));
 
-/* QA params: ?still freezes to final state, ?y=N scrolls on load */
-const qp=new URLSearchParams(location.search);
-if(qp.has("still")){document.body.classList.add("frozen");document.querySelectorAll(".fx").forEach(el=>el.classList.add("shown"));}
-if(qp.has("compact"))document.body.classList.add("compacthero");
-if(qp.has("y")){window.addEventListener("load",()=>window.scrollTo(0,parseInt(qp.get("y"),10)||0));setTimeout(()=>window.scrollTo(0,parseInt(qp.get("y"),10)||0),200);}
+/* progress bar */
+const prog=document.getElementById("prog");
+addEventListener("scroll",()=>{const h=document.documentElement;prog.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+"%";},{passive:true});
+
+/* side dots from [data-dot] */
+const dn=document.getElementById("dots"),secs=[...document.querySelectorAll("[data-dot]")].filter(s=>s.dataset.dot);
+secs.forEach((s,i)=>{s.id="d"+i;const a=document.createElement("a");a.href="#d"+i;a.innerHTML=`<span class="t">${s.dataset.dot}</span><span class="p"></span>`;dn.appendChild(a);});
+const links=[...dn.children];
+const spy=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){const i=secs.indexOf(e.target);links.forEach((l,j)=>l.classList.toggle("on",j===i));}}),{rootMargin:"-45% 0px -45% 0px"});
+secs.forEach(s=>spy.observe(s));
+
+/* QA: ?still freezes animations to final state */
+if(new URLSearchParams(location.search).has("still")){
+  document.querySelectorAll(".fx,figure,.chart-slot").forEach(e=>e.classList.add("in"));
+  const st=document.createElement("style");st.textContent=".fx{opacity:1!important;transform:none!important;transition:none!important}.bar{transform:scaleY(1)!important;animation:none!important}.draw{stroke-dashoffset:0!important;animation:none!important}.cpop,.dot0{opacity:1!important;transform:none!important;animation:none!important}";document.head.appendChild(st);
+}
 </script>
 </body>
 </html>
