@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Topic 5 · Governance · Self-test — self-test</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400..900;1,9..144,400..700&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f7f2e7; --card:#fcf9f1; --ink:#23201a; --ink-soft:#5b5346; --ink-faint:#938a78;
+  --rule:rgba(35,32,26,.14); --rule-2:rgba(35,32,26,.22); --gold:#a9791f; --teal:#2c6e91;
+  --green:#2f7d54; --green-bg:rgba(47,125,84,.12); --coral:#bd472f; --coral-bg:rgba(189,71,47,.10);
+  --display:"Fraunces",Georgia,serif; --body:"Newsreader",Georgia,serif; --mono:"IBM Plex Mono",monospace;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:19px;line-height:1.6;
+  background-image:radial-gradient(140% 60% at 50% 0%,#fbf7ee,#f7f2e7 55%);background-attachment:fixed;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.wrap{max-width:48rem;margin:0 auto;padding:8vh 24px 16vh}
+header{margin-bottom:3vh}
+.eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+h1{font-family:var(--display);font-weight:560;font-size:clamp(33px,6vw,50px);line-height:1.02;letter-spacing:-.02em}
+h1 em{font-style:italic;color:var(--gold)}
+.sub{font-size:20px;color:var(--ink-soft);margin-top:16px;font-style:italic;max-width:40ch;line-height:1.4}
+.note{font-size:15.5px;color:var(--ink-soft);margin-top:22px;border-left:2px solid var(--gold);padding:4px 0 4px 18px;line-height:1.5}
+.note b{color:var(--ink)}
+.scorebar{position:sticky;top:0;z-index:10;background:rgba(247,242,231,.92);backdrop-filter:blur(6px);
+  border-bottom:1px solid var(--rule);padding:14px 0 12px;margin:3vh 0 1vh}
+.sline{font-family:var(--mono);font-size:13px;letter-spacing:.04em;color:var(--ink-soft)}
+.sline .hl{color:var(--green);font-weight:600}
+.bar{height:4px;background:var(--rule);border-radius:3px;margin-top:9px;overflow:hidden}
+.barfill{height:100%;width:0;background:linear-gradient(90deg,var(--gold),var(--teal));transition:width .4s ease}
+.q{background:var(--card);border:1px solid var(--rule);border-radius:11px;padding:24px 24px 20px;margin:20px 0}
+.qhead{display:flex;align-items:baseline;gap:12px;margin-bottom:12px}
+.qnum{font-family:var(--mono);font-size:13px;color:var(--gold);font-weight:600}
+.qtag{font-family:var(--mono);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint)}
+.qstem{font-size:18.5px;line-height:1.5;color:var(--ink);margin-bottom:18px}
+.opts{display:flex;flex-direction:column;gap:9px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;width:100%;cursor:pointer;
+  font-family:var(--body);font-size:16.5px;line-height:1.4;color:var(--ink);background:var(--paper);
+  border:1px solid var(--rule);border-radius:8px;padding:13px 15px;transition:.15s}
+.opt:hover:not(:disabled){border-color:var(--teal);background:#fbf7ee}
+.opt:disabled{cursor:default}
+.opt .mk{flex:none;width:18px;height:18px;border:1.5px solid var(--rule-2);border-radius:50%;margin-top:1px;
+  display:grid;place-items:center;font-family:var(--mono);font-size:11px;color:#fff}
+.opt.correct{border-color:var(--green);background:var(--green-bg)}
+.opt.correct .mk{background:var(--green);border-color:var(--green)}
+.opt.correct .mk::after{content:"✓"}
+.opt.wrong{border-color:var(--coral);background:var(--coral-bg)}
+.opt.wrong .mk{background:var(--coral);border-color:var(--coral)}
+.opt.wrong .mk::after{content:"✕"}
+.fb{margin-top:14px;font-size:15.5px;line-height:1.5;border-top:1px solid var(--rule);padding-top:13px}
+.fb .fgood{color:var(--green);font-weight:500}
+.fb .fbad{color:var(--coral);font-weight:500}
+.fb .fans{color:var(--ink-soft);margin-top:7px}
+.fb .fans b{color:var(--green);font-weight:600}
+.results{background:linear-gradient(180deg,#f3efe0,#efe9d8);border:1px solid var(--rule);border-radius:12px;
+  padding:34px;margin:4vh 0;text-align:center}
+.results .rlab{font-family:var(--mono);font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold)}
+.scorebig{font-family:var(--display);font-weight:560;font-size:52px;margin:8px 0 6px;color:var(--ink)}
+.band{font-size:18px;color:var(--ink-soft);font-style:italic;max-width:34ch;margin:0 auto 22px;line-height:1.4}
+.reset{font-family:var(--mono);font-size:13px;letter-spacing:.06em;color:var(--teal);background:transparent;
+  border:1px solid var(--teal);padding:11px 22px;border-radius:30px;cursor:pointer;transition:.18s}
+.reset:hover{background:var(--teal);color:var(--card)}
+footer{margin-top:7vh;border-top:1px solid var(--rule);padding-top:22px;font-family:var(--mono);font-size:12px;color:var(--ink-faint);letter-spacing:.03em;line-height:1.9}
+footer b{color:var(--ink-soft)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="eyebrow">Topic 5 · Governance · Self-test</div>
+    <h1>Governance Factors in <em>ESG</em></h1>
+    <div class="sub">Check your grip on the governance arc — the eight empirical papers and the African Bank case.</div>
+    <div class="note">Self-test — choose an answer to see whether it's right and <b>why</b>. Your score updates as you go; nothing is recorded or sent anywhere. <b>18 questions</b>, options shuffled each time.</div>
+  </header>
+  <div class="scorebar">
+    <div class="sline"><span id="answered">0</span> of 18 answered &middot; <span id="correct" class="hl">0</span> correct</div>
+    <div class="bar"><div class="barfill" id="barfill"></div></div>
+  </div>
+  <div id="quiz"></div>
+  <div class="results" id="results" hidden>
+    <div class="rlab">Your score</div>
+    <div class="scorebig"><span id="finalscore">0</span> / 18</div>
+    <div class="band" id="band"></div>
+    <button class="reset" type="button" onclick="resetQuiz()">Try again &#8635;</button>
+  </div>
+  <footer>
+    Summer ESG Module &middot; self-test (not graded) &middot; answers &amp; rationales shown<br>
+    <b>Jae Yung Kim</b> &middot; University of Exeter Business School &middot; 2026
+  </footer>
+</div>
+<script>
+const QUESTIONS = [{"tag": "Board diversity — the sign flip", "stem": "Adams and Ferreira (2009) find the OLS coefficient of board gender diversity on firm value is positive, but once they add firm fixed effects and instrument for diversity, it turns negative. The best interpretation is that:", "options": [{"text": "the positive OLS link mostly reflects selection - stronger firms add women - not a causal benefit.", "correct": true, "fb": "Correct. Correcting for selection and reverse causation flips the sign toward zero."}, {"text": "the negative within-firm estimate is the true causal effect, so adding women lowers value on average.", "correct": false, "fb": "No - this over-reads the corrected estimate; the average causal effect is about zero, not reliably negative."}, {"text": "the instrument is weak, so neither the positive nor the negative coefficient identifies a real effect.", "correct": false, "fb": "No - the design is credible; the sign change reflects selection, not a failed instrument."}, {"text": "diversity raises value at well-governed firms but lowers it where governance is already weak.", "correct": false, "fb": "No - this reverses the heterogeneity; the positive effect actually shows up where governance is weak."}]}, {"tag": "Board diversity — behaviour", "stem": "Adams and Ferreira also find more diverse boards have fewer attendance problems, more seats on monitoring committees, and CEO turnover that is more sensitive to poor performance. This shows that board diversity:", "options": [{"text": "strengthens monitoring, though its average effect on firm value is roughly zero to negative.", "correct": true, "fb": "Correct. Behaviour clearly improves; the value effect depends on the firm's existing governance."}, {"text": "improves monitoring, and that stronger oversight is what lifts firm value on average across the sample.", "correct": false, "fb": "No - the better monitoring does not translate into a positive average value effect here."}, {"text": "shows clear effects on firm value but little measurable change in how boards actually behave.", "correct": false, "fb": "No - the reverse: the behavioural effects are the robust finding, not a value effect."}, {"text": "weakens board accountability by adding directors with less firm-specific experience to draw on.", "correct": false, "fb": "No - it strengthens monitoring and makes CEO turnover more performance-sensitive."}]}, {"tag": "CEO pay for luck", "stem": "Bertrand and Mullainathan (2001) find that CEO pay responds to \"luck\" - performance the CEO did not cause, such as an oil-price windfall for an oil firm - about as much as it responds to genuine performance. This suggests that:", "options": [{"text": "pay partly rewards luck the CEO did not create, a symptom of weak board oversight.", "correct": true, "fb": "Correct. The title's point: \"the ones without principals are\" rewarded for luck."}, {"text": "boards reward luck deliberately, to share macroeconomic risk efficiently with risk-averse CEOs.", "correct": false, "fb": "No - rewarding uncontrollable luck is a governance failure, not efficient risk-sharing."}, {"text": "CEOs are paid for skill and luck in proportions that well-designed contracts keep cleanly separate.", "correct": false, "fb": "No - pay responds to luck about as much as to skill; contracts do not filter it out."}, {"text": "the result reflects measurement noise, since luck and skill are hard to disentangle in pay data.", "correct": false, "fb": "No - the study cleanly separates them using exogenous shocks like oil prices."}]}, {"tag": "CEO pay — the role of monitoring", "stem": "In that study, the pay-for-luck shrinks by roughly a quarter to a third when a large shareholder sits on the board, while pay-for-performance is unchanged. The lesson is that:", "options": [{"text": "monitoring strips out the luck component of pay, leaving genuine pay-for-performance intact.", "correct": true, "fb": "Correct. Governance targets the luck component, not pay overall."}, {"text": "monitoring lowers total CEO pay across the board, both the luck part and the performance part alike.", "correct": false, "fb": "No - pay-for-performance is unchanged; only the luck component shrinks."}, {"text": "a large shareholder pushes pay-for-luck higher by bargaining harder on the chief executive's behalf.", "correct": false, "fb": "No - the large shareholder reduces pay-for-luck, by about a quarter to a third."}, {"text": "governance changes the overall level of pay rather than how pay responds to luck versus skill.", "correct": false, "fb": "No - it changes the luck sensitivity specifically, leaving the performance sensitivity intact."}]}, {"tag": "Passive owners", "stem": "Appel, Gormley and Keim (2016) find that higher passive (index) fund ownership is associated with more independent directors, fewer poison pills, and less dual-class stock - \"passive investors, not passive owners.\" The point is that:", "options": [{"text": "index funds use their votes to push for better governance even though they do not pick stocks.", "correct": true, "fb": "Correct. Passive in stock selection does not mean passive in stewardship."}, {"text": "index funds tend to side with management, so heavier index ownership weakens overall board independence.", "correct": false, "fb": "No - the evidence runs the other way: more independent directors, fewer poison pills."}, {"text": "index funds improve governance mainly by threatening to sell, in the way activist managers do.", "correct": false, "fb": "No - they hold the index name regardless, so the lever is voting, not exit."}, {"text": "the governance gains actually come from active funds co-investing alongside the index funds.", "correct": false, "fb": "No - the gains are associated with the passive ownership stake itself."}]}, {"tag": "Hedge-fund activism — no reversal", "stem": "Brav, Jiang, Partnoy and Thomas (2008) find targets of hedge-fund activism earn about +7% abnormal returns around the announcement, with no reversal over the following year. The \"no reversal\" finding matters because it suggests the market reaction reflects:", "options": [{"text": "lasting value creation, since a temporary overreaction would have reversed within the year.", "correct": true, "fb": "Correct. The absence of a reversal points to real improvement, not hype."}, {"text": "a short-lived announcement pop that fades away once the activist later exits the position.", "correct": false, "fb": "No - there is no reversal over the following year; the gain persists."}, {"text": "an initial underreaction, so the returns keep drifting upward well beyond the first year.", "correct": false, "fb": "No - the finding is no reversal, not continued drift; the jump is at announcement."}, {"text": "the target having been overvalued beforehand and then steadily correcting back down.", "correct": false, "fb": "No - the gain is positive and persistent, consistent with value added, not a correction."}]}, {"tag": "Hedge-fund activism — what happens to CEO pay", "stem": "At firms targeted by activist hedge funds (Brav et al., 2008), operating performance (ROA), shareholder payout, and CEO turnover all rise. What tends to happen to CEO pay at these targets?", "options": [{"text": "it falls, as activists curb entrenchment and link pay more tightly to performance.", "correct": true, "fb": "Correct. CEO pay declines at targets, alongside higher turnover and payout."}, {"text": "it rises, rewarding the incumbent CEO for the operating improvements that follow at the firm.", "correct": false, "fb": "No - pay tends to fall; the improvements do not translate into higher CEO pay."}, {"text": "it is unchanged, since activists target strategy and payout rather than executive compensation.", "correct": false, "fb": "No - pay does move, downward, not least through higher CEO turnover."}, {"text": "it rises sharply for the externally hired CEO brought in to run the turnaround.", "correct": false, "fb": "No - the documented effect is lower pay at targets, not a higher-paid replacement."}]}, {"tag": "Does engagement pay", "stem": "Dimson, Karakas and Li (2015) find successful ESG engagements earn about +7% over the following year, unsuccessful ones earn about zero, and only about 18% of engagements succeed. The best summary is that engagement:", "options": [{"text": "pays off on success - upside if it works, little downside if not - though success is rare.", "correct": true, "fb": "Correct. The payoff is conditional and the base rate is low."}, {"text": "pays on average regardless of outcome, since even the failed engagements earn a small premium.", "correct": false, "fb": "No - failed engagements earn about zero; the +7% is entirely in the successes."}, {"text": "usually succeeds, so the average return to engagement works out to a fairly dependable +7%.", "correct": false, "fb": "No - only about 18% succeed; success is the exception, not the rule."}, {"text": "destroys value on average, because most engagements fail and failure itself proves costly.", "correct": false, "fb": "No - failure earns about zero, not a loss; there is upside on success and little downside."}]}, {"tag": "The endogenous electorate", "stem": "Li, Maug and Schwartz-Ziv (2022) find that after a contentious shareholder vote, funds on the losing side tend to sell while winners do not, so the shareholder base becomes more homogeneous. This is evidence that:", "options": [{"text": "ownership at the vote is shaped by trading, as losers sell and the base re-sorts by agreement.", "correct": true, "fb": "Correct. Who owns the firm at the vote is a choice, not a fixed given."}, {"text": "the trading around meetings is essentially noise, unrelated to which side a fund had voted on.", "correct": false, "fb": "No - losers systematically sell; the trading is tied to the vote outcome."}, {"text": "winners sell to lock in their gains while losers hold on, so the base shifts toward the dissenters.", "correct": false, "fb": "No - it is the reverse: losers sell, winners stay, so the base grows more homogeneous."}, {"text": "the vote has no feedback on ownership, since shares are held passively right through the meeting.", "correct": false, "fb": "No - the vote predicts subsequent trading; ownership adjusts after the meeting."}]}, {"tag": "The voting premium", "stem": "Levit, Malenko and Maug (2026) show that the voting premium one measures in market prices does not equal the true value of a vote, and can even be negative. One reason a measured premium can be negative is that:", "options": [{"text": "small holders free-ride on a blockholder's monitoring, lowering what they will pay for a vote.", "correct": true, "fb": "Correct. Free-riding can drive the measured premium below zero."}, {"text": "votes are economically worthless, so any measured premium just reflects pricing noise around zero.", "correct": false, "fb": "No - votes can be valuable; the point is that the measured premium misstates that value."}, {"text": "the measurement method is flawed, so a negative estimate must signal a data error in the prices.", "correct": false, "fb": "No - it is a theoretical result about what the premium captures, not a measurement mistake."}, {"text": "blockholders are barred from voting their own shares, which mechanically depresses a vote's price.", "correct": false, "fb": "No - blockholders do vote; their monitoring is precisely what smaller holders free-ride on."}]}, {"tag": "The opening case — Engine No. 1", "stem": "In 2021, the hedge fund Engine No. 1 owned about 0.02% of ExxonMobil yet won three of twelve board seats on a decarbonisation platform. The mechanism that made this possible was:", "options": [{"text": "the shareholder vote - other large owners, including index funds, backed the insurgent's slate.", "correct": true, "fb": "Correct. No takeover or regulation was needed; the lever was voting."}, {"text": "its own share purchases, which built a stake large enough to force the board change unaided.", "correct": false, "fb": "No - it held only ~0.02%; the change came from other owners' votes, not its own stake."}, {"text": "a regulator that required Exxon to seat new directors with a clear decarbonisation mandate.", "correct": false, "fb": "No - it was a private shareholder vote, not a government mandate."}, {"text": "a takeover bid that pressured the incumbent board into accepting the new directors.", "correct": false, "fb": "No - there was no takeover; the mechanism was the proxy vote."}]}, {"tag": "Agency costs", "stem": "Jensen and Meckling (1976) identify three categories of agency cost generated by the principal-agent relationship. Which set names them correctly?", "options": [{"text": "monitoring costs, bonding costs, and the residual loss that remains despite both.", "correct": true, "fb": "Correct. Owners monitor, managers bond, and value is still lost despite both."}, {"text": "monitoring costs, signalling costs, and the deadweight loss from asymmetric information.", "correct": false, "fb": "No - the second category is bonding, not signalling, and the third is the residual loss."}, {"text": "agency rents, monitoring costs, and the free-cash-flow costs of value-destroying over-investment.", "correct": false, "fb": "No - the three are monitoring, bonding, and residual loss; these are later refinements."}, {"text": "bonding costs, audit costs, and the litigation costs of enforcing directors' fiduciary duties.", "correct": false, "fb": "No - audit and litigation are forms of monitoring; the categories are monitoring, bonding, residual loss."}]}, {"tag": "ABIL — the mono-line problem", "stem": "African Bank was described by its own auditor as a \"mono-line bank.\" Why did this make it especially fragile when the 2012 mining strikes hit its borrowers?", "options": [{"text": "with one product and one borrower segment, it had no other lines to absorb the shock.", "correct": true, "fb": "Correct. Concentration meant the sector shock hit the whole book."}, {"text": "its many different product lines had grown too complex for the board to oversee effectively.", "correct": false, "fb": "No - the problem was too few lines, not too many; it was undiversified."}, {"text": "it funded itself largely through retail deposits that proved flighty once the losses mounted.", "correct": false, "fb": "No - it was wholesale-funded, not deposit-funded; that wholesale funding was itself fragile."}, {"text": "it had hedged the strike risk, but the hedges failed when default correlations spiked sharply.", "correct": false, "fb": "No - there was no such hedge; the fragility was raw concentration in one segment."}]}, {"tag": "ABIL — the Ellerines conflict", "stem": "African Bank lent about R1.4 billion to Ellerines, its own struggling furniture subsidiary, and the two companies shared the same directors. The Myburgh Report concluded that in doing so the directors:", "options": [{"text": "breached their duty to the bank, letting a related-party interest override the bank's own.", "correct": true, "fb": "Correct. \"No reasonable banker\" would have made the loans; duty ran to the bank."}, {"text": "prudently diversified the bank's assets into a complementary consumer-retail business line.", "correct": false, "fb": "No - it concentrated risk in a failing retailer; it did not diversify prudently."}, {"text": "followed accepted practice for related-party lending, with the conflict of interest fully disclosed.", "correct": false, "fb": "No - disclosure does not cure it; it was a textbook conflict that breached duty."}, {"text": "acted within their discretion, since the shared directorships made the loan an internal matter.", "correct": false, "fb": "No - shared ownership creates the conflict; it does not turn it into a routine internal decision."}]}, {"tag": "ABIL — risk governance", "stem": "African Bank's Chief Risk Officer was trained as a botanist, had no banking background, and was frequently incapacitated during the crisis, while the CEO overrode the CFO's larger bad-debt provision. Together these reveal a failure of:", "options": [{"text": "risk governance: the risk function lacked the competence and independence to check management.", "correct": true, "fb": "Correct. An unqualified CRO plus a CEO override of provisioning is a risk-governance failure."}, {"text": "execution by a capable risk team that a well-informed board had simply chosen to overrule.", "correct": false, "fb": "No - the CRO was unqualified and incapacitated; the failure was capability and independence."}, {"text": "excessive caution, since the CRO's provisions were so conservative they choked off new lending.", "correct": false, "fb": "No - the reverse: the CEO overrode the larger provision, so risk was under-recognised."}, {"text": "funding strategy, with the bank's actual risk oversight itself essentially sound and well-staffed.", "correct": false, "fb": "No - the unqualified CRO and the provisioning override are squarely risk-governance failures."}]}, {"tag": "ABIL — the rescue", "stem": "When the South African Reserve Bank rescued African Bank in 2014, it split it into a \"good bank\" (about R26bn) and a \"bad book\" (about R17bn). The relaunched \"good bank\" was given a mandate to:", "options": [{"text": "diversify beyond a single product, correcting the mono-line strategy behind the collapse.", "correct": true, "fb": "Correct. The fix targeted the root strategic failure."}, {"text": "concentrate on its core unsecured-lending product and simply underwrite it rather more carefully.", "correct": false, "fb": "No - the point was to move away from mono-line dependence, not double down on it."}, {"text": "wind down its lending book gradually over time and return the freed capital to depositors.", "correct": false, "fb": "No - it relaunched as an operating bank, not a wind-down."}, {"text": "merge back with Ellerines and rebuild itself around the furniture-retail franchise.", "correct": false, "fb": "No - Ellerines was wound down separately; the good bank was to diversify its lending."}]}, {"tag": "ABIL — governance and the \"S\" in ESG", "stem": "Why is the African Bank collapse a vivid illustration of the link between governance (\"G\") and social outcomes (\"S\")?", "options": [{"text": "a governance failure wiped out roughly 13,000 small investors and harmed vulnerable borrowers.", "correct": true, "fb": "Correct. Bad governance produced a social catastrophe, not just losses for funds."}, {"text": "the damage fell on large institutional funds that could absorb it, largely sparing retail investors.", "correct": false, "fb": "No - small empowerment-scheme investors were wiped out; the harm was not confined to big funds."}, {"text": "the social cost was limited, since depositors were fully protected by the central-bank rescue.", "correct": false, "fb": "No - thousands of small shareholders lost their stake, and borrowers were harmed."}, {"text": "it actually advanced financial inclusion by clearing a reckless lender out of the market.", "correct": false, "fb": "No - it set back the very borrowers and savers the bank was meant to serve."}]}, {"tag": "Dual-class sunsets", "stem": "Aggarwal et al. (2022) find firm value is inverted-U-shaped in the founder's voting-versus-cash-flow \"wedge,\" peaking around 25 percentage points; combined with the entrenchment cost of control, this is the main argument for:", "options": [{"text": "\"sunset\" clauses that let super-voting control expire, since a small wedge helps but a large one hurts.", "correct": true, "fb": "Correct. The inverted-U motivates time-limiting control, not banning it."}, {"text": "an outright ban on dual-class shares, on the view that the founder voting wedge destroys value.", "correct": false, "fb": "No - a small wedge can add value; the case is for sunsets, not bans."}, {"text": "permanent founder control, since the value-maximising voting wedge is large and worth locking in.", "correct": false, "fb": "No - value peaks at a modest wedge (~25pp) and falls beyond it; permanence is what the cost argues against."}, {"text": "a strict one-share-one-vote rule imposed at the IPO, removing the founder wedge from the start.", "correct": false, "fb": "No - a modest wedge is value-adding; the argument is to time-limit control, not eliminate it."}]}];
+const N = QUESTIONS.length;
+let answered = 0, correct = 0;
+function shuffle(a){for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function render(){
+  const quiz=document.getElementById('quiz'); quiz.innerHTML='';
+  QUESTIONS.forEach((q,qi)=>{
+    const card=document.createElement('section'); card.className='q';
+    const head=document.createElement('div'); head.className='qhead';
+    head.innerHTML='<span class="qnum">'+(qi+1)+'</span><span class="qtag">'+q.tag+'</span>';
+    const stem=document.createElement('div'); stem.className='qstem'; stem.innerHTML=q.stem;
+    const opts=document.createElement('div'); opts.className='opts';
+    shuffle(q.options.map((o,i)=>i)).forEach(oi=>{
+      const b=document.createElement('button'); b.className='opt'; b.type='button'; b.dataset.oi=oi;
+      b.innerHTML='<span class="mk"></span><span class="otext">'+q.options[oi].text+'</span>';
+      b.onclick=()=>choose(card,q,b);
+      opts.appendChild(b);
+    });
+    const fb=document.createElement('div'); fb.className='fb'; fb.hidden=true;
+    card.append(head,stem,opts,fb); quiz.appendChild(card);
+  });
+}
+function choose(card,q,btn){
+  if(card.classList.contains('done')) return;
+  card.classList.add('done');
+  const chosen=+btn.dataset.oi, isCorrect=q.options[chosen].correct;
+  const opts=card.querySelector('.opts');
+  [...opts.children].forEach(b=>{ b.disabled=true; const oi=+b.dataset.oi;
+    if(q.options[oi].correct) b.classList.add('correct');
+    if(b===btn && !isCorrect) b.classList.add('wrong'); });
+  const fb=card.querySelector('.fb'); fb.hidden=false;
+  let h='<div class="'+(isCorrect?'fgood':'fbad')+'">'+q.options[chosen].fb+'</div>';
+  if(!isCorrect){ const ci=q.options.findIndex(o=>o.correct);
+    const cfb=q.options[ci].fb.replace(/^Correct\s*[.:\-]?\s*/,'');
+    h+='<div class="fans"><b>Answer:</b> '+q.options[ci].text+(cfb?' — '+cfb:'')+'</div>'; }
+  fb.innerHTML=h;
+  answered++; if(isCorrect) correct++; update();
+}
+function update(){
+  document.getElementById('answered').textContent=answered;
+  document.getElementById('correct').textContent=correct;
+  document.getElementById('barfill').style.width=(answered/N*100)+'%';
+  if(answered===N){
+    document.getElementById('finalscore').textContent=correct;
+    const p=correct/N;
+    document.getElementById('band').textContent =
+      p>=.85?"Excellent — you've got the governance arc cold." :
+      p>=.65?"Solid. Re-read the few you missed and you're there." :
+      p>=.45?"A reasonable start — revisit the flagged papers and try again." :
+      "Worth another pass through the lecture, then come back to this.";
+    const r=document.getElementById('results'); r.hidden=false; r.scrollIntoView({behavior:'smooth',block:'center'});
+  }
+}
+function resetQuiz(){ answered=0; correct=0; document.getElementById('results').hidden=true; render(); update();
+  window.scrollTo({top:0,behavior:'smooth'}); }
+render(); update();
+</script>
+</body>
+</html>
