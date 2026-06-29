@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>When the Machinery Breaks — the African Bank case · a reading</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --paper:#f7f2e7; --paper-2:#efe7d6; --card:#fcf9f1;
+  --ink:#23201a; --ink-soft:#5b5346; --ink-faint:#938a78;
+  --rule:rgba(35,32,26,.14); --rule-strong:rgba(35,32,26,.30);
+  --gold:#a9791f; --gold-bright:#c8941f; --teal:#2c6e91; --green:#2f7d54; --coral:#bd472f; --violet:#6a5aa6;
+  --display:"Fraunces",Georgia,serif; --body:"Newsreader",Georgia,serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+  --measure:39em;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--paper);color:var(--ink);font-family:var(--body);font-size:20.5px;line-height:1.72;font-weight:380;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  background-image:radial-gradient(140% 60% at 50% 0%,#fbf7ee 0%,#f7f2e7 50%);background-attachment:fixed}
+::selection{background:rgba(169,121,31,.22)}
+
+/* progress + chrome */
+#bar{position:fixed;top:0;left:0;height:3px;width:0;z-index:60;background:linear-gradient(90deg,var(--gold),var(--teal))}
+#tocbtn{position:fixed;top:18px;right:18px;z-index:60;font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;
+  color:var(--ink-soft);background:var(--card);border:1px solid var(--rule);padding:8px 13px;border-radius:3px;cursor:pointer;transition:.2s}
+#tocbtn:hover{border-color:var(--gold);color:var(--gold)}
+#toc{position:fixed;inset:0;z-index:70;background:rgba(247,242,231,.97);backdrop-filter:blur(4px);display:none;padding:9vh 8vw;overflow-y:auto}
+#toc.open{display:block;animation:fade .3s ease}
+@keyframes fade{from{opacity:0}to{opacity:1}}
+#toc h3{font-family:var(--mono);font-size:12px;letter-spacing:.24em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:26px}
+#toc ol{list-style:none;counter-reset:t;max-width:760px}
+#toc li{counter-increment:t;border-bottom:1px solid var(--rule)}
+#toc a{display:flex;gap:18px;align-items:baseline;padding:16px 4px;font-family:var(--display);font-size:25px;color:var(--ink);transition:.2s;text-decoration:none}
+#toc a::before{content:counter(t,decimal-leading-zero);font-family:var(--mono);font-size:13px;color:var(--gold);min-width:30px}
+#toc a:hover{color:var(--gold);padding-left:14px}
+#toc .close{position:absolute;top:5vh;right:8vw;font-family:var(--mono);font-size:13px;color:var(--ink-faint);cursor:pointer;letter-spacing:.1em}
+
+/* masthead */
+header.mast{max-width:var(--measure);margin:0 auto;padding:15vh 26px 8vh;position:relative}
+.mast .eyebrow{font-family:var(--mono);font-size:12.5px;letter-spacing:.32em;text-transform:uppercase;color:var(--gold);margin-bottom:30px}
+.mast h1{font-family:var(--display);font-weight:560;font-size:clamp(42px,7vw,76px);line-height:1.0;letter-spacing:-.02em;color:var(--ink)}
+.mast h1 em{font-style:italic;color:var(--gold)}
+.mast .dek{font-family:var(--display);font-weight:300;font-style:italic;font-size:clamp(21px,3vw,28px);color:var(--ink-soft);margin-top:24px;line-height:1.35;max-width:24ch}
+.mast .credit{font-family:var(--mono);font-size:13px;letter-spacing:.04em;color:var(--ink-soft);margin-top:36px;padding-top:20px;border-top:1px solid var(--rule);display:flex;gap:26px;flex-wrap:wrap}
+.mast .credit b{color:var(--ink);font-weight:600}
+.mast .abstract{margin-top:34px;font-size:19px;color:var(--ink-soft);line-height:1.6;border-left:2px solid var(--gold);padding-left:22px;font-style:italic}
+
+/* article */
+article{max-width:var(--measure);margin:0 auto;padding:0 26px 14vh}
+.part{margin:11vh 0 0;padding-top:5vh;border-top:1px solid var(--rule)}
+.part .pnum{font-family:var(--mono);font-size:12.5px;letter-spacing:.26em;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.part h2{font-family:var(--display);font-weight:560;font-size:clamp(32px,5vw,46px);line-height:1.05;letter-spacing:-.015em}
+.part h2 em{font-style:italic;color:var(--gold)}
+h3.sec{font-family:var(--display);font-weight:560;font-size:27px;margin:6vh 0 0;letter-spacing:-.01em;line-height:1.15}
+h3.sec .marker{font-family:var(--mono);font-size:12px;color:var(--gold);letter-spacing:.1em;display:block;margin-bottom:6px;font-weight:500;text-transform:uppercase}
+
+p{margin-top:22px}
+p.lede{font-size:23px;line-height:1.55;color:var(--ink);font-weight:360}
+p.dropcap::first-letter{font-family:var(--display);font-weight:500;font-size:5.4em;line-height:.78;float:left;margin:8px 12px -6px 0;color:var(--gold)}
+em{font-style:italic}
+strong{font-weight:600;color:var(--ink)}
+.tk{font-weight:600;color:var(--ink);font-style:normal}
+.term{color:var(--gold);font-style:italic}
+a.ext{color:var(--teal);border-bottom:1px solid rgba(44,110,145,.3)}
+.cite{font-family:var(--mono);font-size:.74em;color:var(--ink-faint);letter-spacing:.01em;white-space:nowrap}
+.num{font-family:var(--mono);font-variant-numeric:tabular-nums}
+
+blockquote{margin:5vh 0;padding:0 0 0 4px;font-family:var(--display);font-weight:300;font-style:italic;font-size:28px;line-height:1.3;color:var(--ink);max-width:20ch}
+blockquote.center{max-width:none;text-align:center}
+blockquote .a{display:block;font-family:var(--mono);font-style:normal;font-size:13px;color:var(--ink-faint);letter-spacing:.04em;margin-top:14px}
+
+
+/* callouts */
+.consider{background:var(--card);border:1px solid var(--rule);border-left:3px solid var(--gold);border-radius:0 7px 7px 0;padding:24px 28px;margin:4.5vh 0}
+.consider .lab{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:11px;display:flex;align-items:center;gap:10px}
+.consider .lab::before{content:"";width:16px;height:16px;border:1.5px solid var(--gold);border-radius:50%;display:inline-block}
+.consider p{margin-top:0;font-size:20px;color:var(--ink)}
+.consider p+p{margin-top:12px}
+.keyidea{background:linear-gradient(180deg,#f3efe0,#efe9d8);border-radius:8px;padding:26px 30px;margin:4.5vh 0;border:1px solid var(--rule)}
+.keyidea .lab{font-family:var(--mono);font-size:11.5px;letter-spacing:.2em;text-transform:uppercase;color:var(--green);margin-bottom:11px}
+.keyidea p{margin-top:0;font-size:20.5px;color:var(--ink)}
+.aside{font-size:16.5px;color:var(--ink-soft);background:rgba(35,32,26,.035);border-radius:6px;padding:16px 20px;margin:3.5vh 0;line-height:1.55}
+.aside .lab{font-family:var(--mono);font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:var(--ink-faint);margin-bottom:7px}
+
+/* figures */
+figure{margin:5.5vh 0;text-align:center}
+figure.wide{width:min(92vw,820px);margin-left:50%;transform:translateX(-50%)}
+.chartbox{background:var(--card);border:1px solid var(--rule);border-radius:9px;padding:26px 26px 18px;box-shadow:0 1px 0 rgba(255,255,255,.6) inset}
+.chartbox svg{width:100%;max-width:560px;height:auto;overflow:visible;display:block;margin:0 auto}
+figure.wide .chartbox svg{max-width:720px}
+figcaption{font-size:16px;color:var(--ink-soft);margin-top:16px;line-height:1.5;text-align:left;max-width:62ch;margin-left:auto;margin-right:auto}
+figcaption .fnum{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-right:8px}
+
+/* data table inside text */
+.tablewrap{margin:5vh 0}
+table{width:100%;border-collapse:collapse;font-size:16.5px;background:var(--card);border:1px solid var(--rule);border-radius:8px;overflow:hidden}
+table caption{caption-side:top;text-align:left;font-size:16px;color:var(--ink-soft);margin-bottom:12px;line-height:1.5}
+table caption .fnum{font-family:var(--mono);font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-right:8px}
+th{font-family:var(--mono);font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-faint);text-align:left;font-weight:500;padding:14px 18px;border-bottom:1px solid var(--rule-strong);background:var(--paper-2)}
+td{padding:13px 18px;border-bottom:1px solid var(--rule);color:var(--ink-soft);line-height:1.35}
+tr:last-child td{border-bottom:none}
+td b{color:var(--ink)}
+td.n{font-family:var(--mono);text-align:right;color:var(--ink);font-size:15px;white-space:nowrap}
+.n.up{color:var(--green)}.n.dn{color:var(--coral)}.n.key{color:var(--gold)}
+.matrix td.n{text-align:center}.matrix .rh{color:var(--ink);font-weight:600;font-family:var(--body)}
+
+/* chart internals (theme via vars) */
+.chart .ax{stroke:var(--rule-strong);stroke-width:1.3;fill:none}
+.chart .zero{stroke:var(--rule-strong);stroke-width:1;stroke-dasharray:2 3}
+.chart .axlbl{font-family:var(--mono);font-size:12px;fill:var(--ink-faint);letter-spacing:.04em}
+.chart .vlbl{font-family:var(--mono);font-size:14px;font-weight:600}
+.chart .clbl{font-family:var(--body);font-size:14px;fill:var(--ink-soft)}
+.chart .note{font-family:var(--body);font-size:13px;font-style:italic}
+.bar{transform:scaleY(0);transform-box:fill-box}.bar.pos{transform-origin:bottom}.bar.neg{transform-origin:top}
+.shown .bar{animation:bg .8s cubic-bezier(.18,.85,.3,1) forwards}@keyframes bg{to{transform:scaleY(1)}}
+.draw{stroke-dasharray:2600;stroke-dashoffset:2600}.shown .draw{animation:dr 1.2s ease .1s forwards}@keyframes dr{to{stroke-dashoffset:0}}
+.cpop{opacity:0;transform:translateY(7px)}.shown .cpop{animation:cp .6s ease forwards}@keyframes cp{to{opacity:1;transform:none}}
+.dot0{transform:scale(0);transform-box:fill-box;transform-origin:center}.shown .dot0{animation:di .5s cubic-bezier(.3,1.4,.5,1) forwards}@keyframes di{to{transform:scale(1)}}
+figure .chartbox{opacity:0;transform:translateY(20px);transition:opacity .8s ease,transform .8s ease}
+figure.shown .chartbox{opacity:1;transform:none}
+
+/* references */
+.refs{margin-top:11vh;padding-top:5vh;border-top:1px solid var(--rule)}
+.refs h2{font-family:var(--display);font-weight:560;font-size:30px;margin-bottom:8px}
+.refs .note{color:var(--ink-faint);font-size:15px;margin-bottom:24px}
+.refs ol{list-style:none;counter-reset:r}
+.refs li{counter-increment:r;position:relative;padding:14px 0 14px 42px;border-bottom:1px solid var(--rule);font-size:16.5px;color:var(--ink-soft);line-height:1.5}
+.refs li::before{content:counter(r);position:absolute;left:0;top:15px;font-family:var(--mono);font-size:12px;color:var(--gold)}
+.refs li b{color:var(--ink);font-weight:600}
+.refs li i{font-style:italic}
+
+footer{max-width:var(--measure);margin:0 auto;padding:8vh 26px 12vh;text-align:center;color:var(--ink-faint);font-family:var(--mono);font-size:13px;letter-spacing:.04em;line-height:1.9}
+footer .big{font-family:var(--display);font-style:italic;font-size:28px;color:var(--ink);letter-spacing:0;margin-bottom:18px}
+footer .small{font-size:11.5px;line-height:1.7;margin-top:18px;color:var(--ink-faint);max-width:50ch;margin-left:auto;margin-right:auto}
+
+@media(max-width:680px){body{font-size:19px}p.dropcap::first-letter{font-size:4.2em}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<button id="tocbtn">Contents</button>
+<nav id="toc"><span class="close">✕ close</span><h3>Contents</h3><ol id="toclist"></ol></nav>
+
+<header class="mast">
+  <div class="eyebrow">Summer ESG Module · Afternoon case · A reading</div>
+  <h1>When the Machinery <em>Breaks</em></h1>
+  <div class="dek">African Bank, and the anatomy of a governance failure.</div>
+  <div class="credit"><span><b>Jae Yung Kim</b></span><span>29 June 2026</span><span>≈ 22 min read</span></div>
+  <p class="abstract">This morning we built the governance machine — boards, votes, blockholders, incentives — and watched it carry environmental and social preferences into what a company actually does. This afternoon we watch the same machine fail. African Bank went from “South African Bank of the Year” to seizure by the central bank in eighteen months, wiping out some thirteen thousand small investors. No fraud was ever found. The collapse was something more instructive than a crime: a governance failure, assembled lever by lever out of the very mechanisms we studied this morning. This reading builds that failure as the board itself experienced it — six decisions, each a lesson — and ends where ESG begins, in the social wreckage a broken board leaves behind.</p>
+</header>
+
+<article id="doc">
+
+<!-- ===================== PROLOGUE ===================== -->
+<section class="part" data-toc="Prologue · Bank of the Year">
+<div class="pnum">Prologue</div>
+<h2>“Bank of the Year,” and then nothing</h2>
+
+<p class="dropcap"><strong>In November 2012,</strong> <em>The Banker</em> — the Financial Times group's magazine for the banking industry — named African Bank its “South African Bank of the Year.” The citation praised a “robust business model” and “sophisticated risk models.” It was an unremarkable award to give. The holding company, <span class="tk">African Bank Investments Limited</span> — ABIL — had been one of the hottest stocks on the Johannesburg exchange for a decade. Its profits had climbed from under a billion rand to <span class="num">R3.1bn</span>; its share price had risen more than eight-fold; its founder-chief-executive was celebrated as the man who had taught South Africa how to lend to the poor. By every visible measure it was a success, and its governance, on paper, was exemplary: an independent-majority board, a full slate of committees, a former audit-firm partner as chief financial officer.</p>
+
+<p>Before you read on, it is worth committing to a guess, because the whole point of the case is that the obvious answer is wrong.</p>
+
+<div class="consider"><div class="lab">Consider this</div>
+<p>A bank goes from “Bank of the Year” to seizure by the central bank in <strong>eighteen months</strong>. What is the most likely root cause — <em>fraud</em>, a <em>bad strategy</em>, <em>poor risk management</em>, a <em>failed board</em>, or simply <em>bad luck</em>? Hold your answer; we will return to it at the very end.</p></div>
+
+<p>Here is what happened. By August 2014 the shares were worth <strong>less than one rand</strong> — down <span class="num">over 90%</span> in a single week. The South African Reserve Bank seized the bank and placed it under curatorship. And roughly <strong>thirteen thousand</strong> small, mostly black investors — many of them the bank's own employees and customers, who had bought in through community share schemes — were wiped out entirely. The most striking fact in the entire case is the one the official investigation reported a year later: there was <em>no fraud.</em> Nobody stole anything. The bank collapsed not because someone broke the law but because the people charged with governing it did their jobs badly. That is what makes African Bank worth two hours of a finance class rather than a paragraph in a true-crime book.</p>
+
+<blockquote class="center">When governance fails, it does not merely lower returns. It manufactures catastrophe — and hands the bill to the people least able to pay it.</blockquote>
+
+<p>This is the thesis that carries over from the morning, turned upside down. We argued there that governance is the <span class="tk">transmission mechanism</span>: the machinery through which the preferences of a firm's owners reach the firm's decisions. In the lecture we watched that machinery deliver environmental and social outcomes. Here we watch the identical machinery — a dominant chief executive, a deferential board, an unqualified risk officer, a buried conflict of interest — transmit ruin instead. We will build the failure the way the board built it: one decision at a time, each one a lever from the morning's toolkit, each one pulled the wrong way.</p>
+</section>
+
+<!-- ===================== PART ONE ===================== -->
+<section class="part" data-toc="1 · The company that did one thing">
+<div class="pnum">Part One</div>
+<h2>The company that did <em>one thing</em></h2>
+
+<p class="lede">To understand why African Bank was so fragile, you have to understand how unusual it was. It was not a bank in the ordinary sense at all. It did exactly one thing, for one kind of customer, with one kind of money — and it did that one thing on an enormous scale.</p>
+
+<p>African Bank made <span class="term">unsecured</span> loans: cash loans with no collateral behind them, to mostly lower-income South Africans, for the ordinary emergencies of a hard life — a car repair, a funeral, school fees, a medical bill, the settling of an older debt. The business had its roots in the deliberate exclusions of apartheid. Most poor, black South Africans had been kept from owning property, so they had no title deeds to pledge against a loan and no access to mainstream credit; a 1992 legal exemption created room for small unsecured loans as a regulated alternative to loan sharks. African Bank built itself in that space, and by 2013 it dominated it. It had around <span class="num">three million</span> customers, more than five thousand staff, over fifteen hundred outlets, and a loan book of <span class="num">R59bn</span> — more than <strong>thirty percent</strong> of the country's entire unsecured-lending market.</p>
+
+<p>Its own auditor coined the term that best describes it. African Bank, the auditor wrote, was a <span class="term">mono-line bank</span>: “it offers and earns monies from only one product — unsecured loan finance.” It took no customer deposits. It ran no current accounts, no mortgages, no savings products, no other line of any kind. Where a normal bank is a diversified portfolio of activities, African Bank was a single, undiversified bet, repeated three million times.</p>
+
+<figure data-fig="loanbook">
+<div class="chartbox"><div class="chart-slot" data-chart="loanbook"></div></div>
+<figcaption><span class="fnum">Figure 1</span>African Bank's loan book, 2003–2013. It grew almost tenfold in a decade — from about <span class="num">R6.3bn</span> to <span class="num">R59bn</span> — with an internal ambition of reaching <span class="num">R75bn</span>. Rapid growth in a single product is the case in one picture: there was nothing else on the balance sheet to cushion it. <span class="cite">(ABIL annual reports; redrawn.)</span></figcaption></figure>
+
+<h3 class="sec">Funded by markets, not by depositors</h3>
+
+<p>The second unusual thing about African Bank was where its money came from, and this is the detail that turned fragility into mortality. A normal bank funds its lending with customer <em>deposits</em> — sticky, granular, insured money that tends to stay put even in bad times. African Bank had no deposits to speak of. It funded itself instead by selling <span class="term">bonds</span> — wholesale debt — to a small number of large institutions. Roughly seventy percent of its funding came from long-term notes and barely one percent from deposits; a comparable but far healthier peer, Capitec, drew more than three-quarters of its funding from deposits.</p>
+
+<figure data-fig="funding">
+<div class="chartbox"><div class="chart-slot" data-chart="funding"></div></div>
+<figcaption><span class="fnum">Figure 2</span>How African Bank funded itself, against a peer. The bank ran almost entirely on wholesale bonds (coral) rather than customer deposits (teal). Worse, just <strong>about ten institutions</strong> provided over <span class="num">75%</span> of all its funding — confidence-sensitive money that, as one shareholder warned, could be withdrawn quickly. <span class="cite">(ABIL reports; HBS case 319-052; redrawn.)</span></figcaption></figure>
+
+<p>Concentration made it worse still. Around ten institutions supplied more than three-quarters of the bank's funding, and a shareholder — the asset manager Coronation — had flagged this explicitly as a risk: wholesale funding is confidence-sensitive, and confidence can vanish in a week. A bank that lends long and borrows short from a handful of nervous institutions is a bank that can survive only as long as those institutions keep believing in it. That belief was the whole foundation, and it was thinner than it looked.</p>
+
+<h3 class="sec">2008: a furniture chain, and a foreshadowing</h3>
+
+<p>In 2008 African Bank did the one big thing it ever did outside its single product line: it paid <span class="num">R9.1bn</span> for <span class="tk">Ellerine Holdings</span>, a furniture retailer with more than a thousand stores and nearly eight thousand employees. The strategic logic was to plant African Bank loan kiosks inside the furniture stores and grow the customer base from there. But notice the governance detail, because it returns as the sharpest moment in the case: by one account the chief executive sought <em>regulatory</em> approval for the acquisition <em>before his own board had approved it.</em> The board convened five days later — nearly half of the directors joining by teleconference — and signed off after his presentation. The deal was, in effect, presented to the board as done.</p>
+
+<div class="aside"><div class="lab">Remember Ellerines</div>The furniture business will reappear twice — first as the source of the bank's largest and most conflicted loan, and then, in August 2014, as the domino that falls first. Keep it in view.</div>
+
+<h3 class="sec">Who was in the room</h3>
+
+<p>On paper, the board that oversaw all of this was a model of good governance. As of September 2013 it had <span class="num">eleven</span> directors — four executive and seven independent non-executive — and five committees: audit, risk, ethics, remuneration, and directors' affairs. An independent majority, a full committee structure, the textbook architecture. The problem was never the architecture. It was the people inside it, and the way power actually flowed among them.</p>
+
+<div class="tablewrap"><table class="data"><caption><span class="fnum">Table 1</span>The principal cast. Each of these four roles maps to a governance mechanism we studied this morning — and in each, the structure was present but the substance was missing.</caption>
+<thead><tr><th>Person</th><th>Role</th><th>The problem, in hindsight</th></tr></thead><tbody>
+<tr><td><b>Leon Kirkinis</b></td><td>Co-founder &amp; <b>CEO</b> since 1993; chartered accountant</td><td>The “champion of unsecured lending” whom no one would contradict</td></tr>
+<tr><td><b>Nithia Nalliah</b></td><td><b>CFO</b>; former Deloitte partner</td><td>The bank's external auditor, Deloitte, was his old firm</td></tr>
+<tr><td><b>Tami Sokutu</b></td><td>Chief <b>Risk</b> Officer; trained as a botanist</td><td>No banking background; later incapacitated, yet kept his seat</td></tr>
+<tr><td><b>Toni Fourie</b></td><td>A bank <b>director</b> — and CEO of Ellerines</td><td>Sat on both sides of a <span class="num">R1.4bn</span> related-party loan</td></tr>
+</tbody></table></div>
+
+<p>That table is the case in miniature. Seven independent directors and five committees did not prevent any of what follows, because governance is not the chart of who sits where. It is the behaviour those people actually engage in. We turn now to six decisions in which the behaviour failed.</p>
+</section>
+
+<!-- ===================== PART TWO ===================== -->
+<section class="part" data-toc="2 · Six failures, one missing thing">
+<div class="pnum">Part Two</div>
+<h2>Six failures, one <em>missing thing</em></h2>
+
+<p class="lede">What follows is not a list of villains. It is a sequence of ordinary board decisions, each defensible in the moment, each a textbook governance mechanism that was present in form and absent in force. As you read, ask the question the directors should have asked — and notice how often the honest answer was “nothing was stopping us, and no one did.”</p>
+
+<h3 class="sec"><span class="marker">Failure 1 · board independence</span>The founder who was always right</h3>
+
+<p>For almost the whole of African Bank's history, the official investigation later found, “there was no material decision … which did not carry [Kirkinis's] support.” He was, in the report's phrase, “the person who had to be persuaded.” No other director knew the bank as intimately; he had built it. When he and other directors disagreed, the board “gave more credence to his views.” Put yourself in the position of an independent director on that board. The co-founder has been right for twenty years. He owns the room. The share price says he is a genius.</p>
+
+<div class="consider"><div class="lab">Consider this</div>
+<p>What can a board actually <em>do</em> to keep a dominant, successful, founder-chief-executive accountable — when every instinct, and every quarter's results, tells the directors to defer to him?</p></div>
+
+<p>The investigation's answer was unsparing. It used the word <span class="term">hubris</span>: Kirkinis tended to believe that “he was right and everyone else was wrong,” and the board, it concluded, was “dominated by Mr Kirkinis.” One analyst put the structural version plainly: “CEOs can become too big for their boards … the balance of power sits with the CEO and the board feels it cannot really challenge him.” A newspaper headline was blunter still — “Board beguiled by toxic charm.” The nuance worth keeping is that a handful of directors <em>did</em> push back; the report names a few who raised objections. Independence, in other words, was not uniformly absent. It was simply too weak, in too few people, to move a board that had spent two decades agreeing with one man.</p>
+
+<div class="keyidea"><div class="lab">The lever · board independence &amp; the CEO–board balance</div>
+<p>Seven independent directors and a full committee structure did not produce independent <em>challenge.</em> Independence is not a box on an org chart; it is a behaviour — the willingness to say no to someone who has been right for twenty years. <strong>Structure is necessary, but it is never sufficient.</strong> This is precisely the gap between a board's form and its function that the morning's work on boards as monitors was about.</p></div>
+
+<h3 class="sec"><span class="marker">Failure 2 · the risk function</span>Who owned the risk?</h3>
+
+<p>Consider how the riskiest loan book in the country was supervised. The bank's <strong>Chief Risk Officer</strong> was a trained botanist and former civil servant with no banking background, who in the crucial crisis years was, the investigation found, frequently incapacitated by a severe drinking problem and able to make “no meaningful contribution.” The chief executive knew, and eventually put him on extended leave — but he remained a <em>director</em> of the bank. And in March 2013, at the most important moment, the chief financial officer recommended an additional <span class="num">R450m</span> bad-debt provision; the chief executive thought <span class="num">R350m</span> was enough — “the second half is always better” — and the chief executive prevailed.</p>
+
+<div class="consider"><div class="lab">Consider this</div>
+<p>What is a board <em>risk committee</em> actually for? Whose job was it to stop an unqualified risk officer and an optimistic chief executive from setting aside too little for losses — and why did that safeguard not fire?</p></div>
+
+<p>The provisioning episode is the tell, and it is worth slowing down on. A bad-debt provision is the bank's own estimate of how much of its loan book will not be repaid. When the chief executive can overrule the chief financial officer on <em>how large the losses are</em>, reported profit stops being a fact and becomes a matter of opinion — and the opinion that wins is the one that flatters the results and <em>postpones</em> the reckoning. A risk function exists to be the one voice in the building that is structurally permitted to be pessimistic. At African Bank that voice had neither the expertise nor the standing to be heard over the founder's optimism.</p>
+
+<div class="keyidea"><div class="lab">The lever · board competence &amp; the risk function</div>
+<p>A risk committee disciplines management only if it has both the <strong>expertise</strong> to know what it is looking at and the <strong>standing</strong> to say no and make it stick. Here it had neither — an unqualified officer, an overridden provision, a profit number that had become an opinion. Competence on the board is not a courtesy; it is the precondition for oversight to mean anything.</p></div>
+
+<h3 class="sec"><span class="marker">Failure 3 · strategy oversight</span>One product, one bet</h3>
+
+<p>We have already seen that African Bank was a mono-line lender by description. What matters for governance is that it was mono-line by <em>choice</em>, against repeated advice. The bank was urged, more than once, to diversify into other banking services that might steady it through a downturn. The chief executive refused; for him, other products were a “no-go area.” That refusal is the crux of the case's hardest discussion, because diversification is normally management's call, not the board's — and yet concentration this extreme had stopped being a strategy choice and become an existential risk.</p>
+
+<div class="consider"><div class="lab">Consider this</div>
+<p>Diversification is usually management's prerogative. But when concentration becomes a threat to survival, should the board <em>overrule</em> the chief executive and force the firm to diversify? Where, exactly, is the line between respecting strategy and protecting the firm?</p></div>
+
+<p>Reality answered the question for them. In 2012 a wave of platinum-mining strikes tore through the bank's borrower base — the very lower-income workers it lent to — and defaults jumped from roughly ten times to thirty times the levels a normal bank would see. A diversified bank absorbs a sector shock like that somewhere else on its balance sheet. African Bank had no “somewhere else.” With no other business lines to cushion the blow, it posted, in 2013, the first loss in its history: <span class="num">R4.2bn</span>.</p>
+
+<figure data-fig="profit">
+<div class="chartbox"><div class="chart-slot" data-chart="profit"></div></div>
+<figcaption><span class="fnum">Figure 3</span>African Bank's annual profit. Years of steady earnings, a record <span class="num">R3.1bn</span> in 2012 — and then, in 2013, a <span class="num">R4.2bn</span> loss, the first ever. A diversified bank rides out a sector shock; a mono-line bank <em>is</em> the shock. <span class="cite">(ABIL annual reports; redrawn.)</span></figcaption></figure>
+
+<div class="keyidea"><div class="lab">The lever · strategy oversight &amp; challenge</div>
+<p>The board's clearest single failure was not stopping a concentration it had been warned about. A diversified bank survives a strike season; a mono-line bank built on one product, one borrower segment, and one funding source <strong>is</strong> the downturn when it comes. Overseeing strategy means challenging the bet, not just admiring the returns it produces while the weather holds.</p></div>
+
+<h3 class="sec"><span class="marker">Failure 4 · conflicts of interest</span>Lending to your own subsidiary</h3>
+
+<p>Now Ellerines returns. By 2014 African Bank had lent <span class="num">R1.4bn</span> to Ellerines — its own struggling furniture subsidiary, which by then needed at least <span class="num">R70m a month</span> simply to keep operating. Hold two structural facts together. First, Toni Fourie ran Ellerines <em>and</em> sat on the bank's board. Second, the bank and its holding company shared the same directors, meeting on the same day — what the case calls a “unitary board.” So a bank whose entire business was small loans to individuals made a very large loan to a failing furniture retailer that it happened to own, with the retailer's chief executive in the room.</p>
+
+<div class="consider"><div class="lab">Consider this</div>
+<p>Whose interests was the board serving when it approved those loans — the <em>bank's</em>, whose depositors and bondholders bore the risk, or the <em>holding company's</em>, which needed to keep its furniture business alive?</p></div>
+
+<p>The investigation's verdict on this point is the most quotable in the case. “No reasonable banker,” it found, would have made the Ellerines loans; in making them, the directors “acted in breach of their fiduciary duty … to the bank.” The conflict is structural and clean: what is good for <em>ABIL</em>, the parent — prop up the furniture business it owns — is not what is good for <em>the bank</em>, which should never have lent R1.4bn to a failing retailer. A unitary board, with the same people wearing both hats, could not hold the two apart. The most telling detail of all: when asked about the conflict afterward, every director but one denied that it had even existed.</p>
+
+<blockquote>“No reasonable banker” would have made the Ellerines loans.<span class="a">— Myburgh Report, South African Reserve Bank, 2016</span></blockquote>
+
+<div class="keyidea"><div class="lab">The lever · conflicts of interest &amp; related-party transactions</div>
+<p>Group structures manufacture divided loyalties. A bank director's fiduciary duty runs to <strong>the bank</strong> — to its depositors and its bondholders — not to the parent company's other ventures. The unitary board obscured exactly the conflict the rules on related-party transactions exist to expose, and a director who cannot <em>see</em> a conflict is in no position to manage it.</p></div>
+
+<h3 class="sec"><span class="marker">Failure 5 · audit independence</span>How independent was the audit?</h3>
+
+<p>The system's last line of defence against a too-rosy picture is supposed to be the audit — the auditors and the audit committee whose job is to tell the uncomfortable truth. At African Bank that line was compromised from both ends. The chief financial officer, Nalliah, was a <em>former Deloitte partner</em>, and ABIL had been his client; Deloitte was the bank's external auditor. Meanwhile the chair of the audit committee, Sithole, complained that management's reporting carried an “overly positive tone,” and that by “not being aware of the true condition of the business,” management had “postponed urgent corrective steps.” He resigned in 2013, citing “fundamental problems.”</p>
+
+<div class="consider"><div class="lab">Consider this</div>
+<p>Auditors and audit committees are the system's truth-tellers. What happens to that safeguard when the chief financial officer and the external auditor are this close — and the disclosures stay relentlessly upbeat right up to the collapse?</p></div>
+
+<p>The two halves of Failure 5 are really one problem seen twice. The familiarity between an ex-Deloitte-partner CFO and his old firm as auditor is precisely the closeness that auditor-independence rules exist to prevent. And the “overly positive tone” is the provisioning override of Failure 2 viewed from the outside: results that looked healthier than the business actually was. The one director who objected loudly enough — the audit chair — <em>left.</em> The safeguard did not just fail to fire; the person trying to pull the trigger walked out. In the aftermath, investors sued the former directors <em>and</em> Deloitte for over <span class="num">R2bn</span>.</p>
+
+<div class="keyidea"><div class="lab">The lever · audit-committee effectiveness &amp; auditor independence</div>
+<p>Disclosure and audit are governance mechanisms only to the extent they are independent enough to deliver <strong>bad</strong> news. An audit that is too close to management, and an audit committee whose dissenter resigns, is not a safeguard — it is a formality that lends false comfort right up to the moment the comfort runs out.</p></div>
+
+<h3 class="sec"><span class="marker">Failure 6 · incentives</span>What was the chief executive paid to do?</h3>
+
+<p>The last failure is the quietest, and it ties the case back to the morning most directly. Kirkinis's <em>salary</em> was modest — about <span class="num">R2.2m</span> in 2012, less than the chief financial officer's. But salary was beside the point. He and a family trust held a large block of African Bank shares, and on that block he earned roughly <span class="num">R286m in dividends</span> over time, worth perhaps <span class="num">R650m</span> at the peak. His wealth, in other words, came from <em>dividends</em> — and dividends come from <em>growth.</em></p>
+
+<div class="consider"><div class="lab">Consider this</div>
+<p>If almost all of the chief executive's wealth flowed from dividends on his shares, did the incentive structure quietly reward exactly the aggressive, undiversified expansion that ultimately sank the bank? Recall the morning's lesson: pay can be a <em>symptom</em> of weak governance, not only a cure for it.</p></div>
+
+<p>This is the African Bank version of a result we met this morning in Bertrand and Mullainathan's work on pay for luck <span class="cite">(QJE, 2001)</span>. There, the danger was a captured compensation committee paying a chief executive for a windfall he did not create. Here the structure is subtler but related: an incentive package, dominated by dividends, that paid the founder most when the bank grew fastest — and a board unwilling to push back on the growth that fed it. Incentives that reward expansion, overseen by a board that defers to the expander, do not merely fail to restrain risk-taking. They subsidise it.</p>
+
+<div class="keyidea"><div class="lab">The lever · executive incentives</div>
+<p>Pay tied to growth, in the hands of a founder no one would challenge, did not align the chief executive with the firm's long-run health — it <strong>aligned him with the very strategy that destroyed it.</strong> Incentive design is a governance question, and at African Bank the incentives and the deference pointed the same dangerous way.</p></div>
+</section>
+
+<!-- ===================== PART THREE ===================== -->
+<section class="part" data-toc="3 · The collapse">
+<div class="pnum">Part Three</div>
+<h2>The collapse</h2>
+
+<p class="lede">Six failures had quietly assembled a machine that could only run in good weather. In 2012 the weather changed, and the machine did what undiversified, wholesale-funded, over-optimistic machines do. It did not wind down. It fell off a cliff.</p>
+
+<p>The turn came fast. 2012 was the peak: record profit, a share price near <span class="num">R40</span>, the Bank-of-the-Year award. 2013 brought the first loss — <span class="num">R4.2bn</span> — and, alongside it, a reckless-lending case from the regulator. By December 2013 the bank attempted a <span class="num">R5.5bn</span> equity raise, underwritten by Goldman Sachs, in its own words “to save the group from inevitable bankruptcy.” It was not enough. Once a wholesale-funded bank's lenders begin to doubt it, the doubt feeds on itself: funding costs rise, which deepens the losses, which deepens the doubt.</p>
+
+<figure data-fig="price">
+<div class="chartbox"><div class="chart-slot" data-chart="price"></div></div>
+<figcaption><span class="fnum">Figure 4</span>The arc of the share price, 2003–2014. More than eight-fold up over a decade, to about <span class="num">R40</span> — and then, in a matter of months, down to <strong>under one rand</strong>. The collapse erased not only the gains but very nearly the entire value of the company. <span class="cite">(ABIL reports; HBS case 319-052/053; redrawn.)</span></figcaption></figure>
+
+<h3 class="sec">The week it ended — August 2014</h3>
+
+<p>The end, when it came, took a single week. On <strong>6 August</strong> Kirkinis resigned; the same day, ABIL warned of a loss of <span class="num">R7.6bn</span> or more and the need to raise a <em>further</em> <span class="num">R8.5bn</span> — a rights issue that was plainly untenable. On <strong>7 August</strong> Ellerines, the furniture business, entered business rescue, South Africa's equivalent of Chapter 11. Between <strong>31 July and 7 August</strong> the shares fell more than ninety percent, to under one rand. By mid-month, trading was suspended and the South African Reserve Bank placed African Bank under <span class="term">curatorship</span> — with the pointed clarification, for the bank's three million borrowers, that there would be “no payment holiday”: collections would continue. The founder, by several accounts, kept buying shares as they fell, because “he believed in his narrative,” and lost roughly ninety-five percent of his own net worth in the wreck of the thing he had built.</p>
+
+<h3 class="sec">The rescue: a “good bank” and a “bad book”</h3>
+
+<p>To save anything at all, the Reserve Bank split African Bank in two. A <strong>“good bank”</strong> of about <span class="num">R26bn</span> in performing loans was recapitalised — by the Reserve Bank, the government employees' pension fund, and a consortium of the country's banks — and relaunched as an independent African Bank in April 2016, this time with an explicit mandate to <em>diversify</em> beyond its single product. A <strong>“bad book”</strong> of roughly <span class="num">R17bn</span> in non-performing loans was carved off, renamed Residual Debt Services, and slowly wound down.</p>
+
+<figure data-fig="goodbad">
+<div class="chartbox"><div class="chart-slot" data-chart="goodbad"></div></div>
+<figcaption><span class="fnum">Figure 5</span>The rescue, in proportions. The Reserve Bank split the failed institution into a recapitalised “good bank” (<span class="num">R26bn</span> of performing loans) and a “bad book” (<span class="num">R17bn</span> of non-performing loans) to be wound down. Notably, the relaunched bank was given the one instruction its predecessor had refused: <em>diversify.</em> <span class="cite">(SARB; HBS case 319-053; redrawn.)</span></figcaption></figure>
+</section>
+
+<!-- ===================== PART FOUR ===================== -->
+<section class="part" data-toc="4 · The verdict, and who paid">
+<div class="pnum">Part Four</div>
+<h2>The verdict, and <em>who paid</em></h2>
+
+<p class="lede">The Reserve Bank commissioned a judge-led investigation into the collapse. Its conclusion is the reason this is a governance case and not a fraud case — and it is worth stating in the report's own careful language.</p>
+
+<p>The Myburgh Report, published in 2016, found <strong>no evidence of fraud.</strong> What it found instead was that “the business of the bank was conducted negligently”; that the directors had “acted in breach of their fiduciary duty to the bank,” had “not exercised the required care and skill,” and had “not act[ed] in the best interests of the bank.” No one had stolen. Everyone, collectively, had failed to govern. That distinction is the whole pedagogical value of the case: a crime is a story about bad people, and there is little to learn from it; a governance failure is a story about ordinary, well-credentialed, well-intentioned people inside a structure that did not constrain them — and that is a story that repeats.</p>
+
+<blockquote class="center">The collapse was not a crime. It was a governance failure — which is far more common, and far more worth studying.</blockquote>
+
+<p>And now the part that makes this an ESG case rather than a finance footnote. Ask who actually absorbed the loss. Some <span class="num">thirteen thousand</span> small, mostly black investors — who had bought into African Bank through community empowerment vehicles named Hlumisa and Eyomhlaba, as employees, former employees, customers, and ordinary savers — lost their <em>entire</em> investments. Vulnerable borrowers faced continued collection on loans that, in many cases, they should never have been granted. And investors sued the former directors and the auditor for over <span class="num">R2bn</span>, in what became a closely watched test of whether directors can be held <em>personally</em> liable for negligence of this kind.</p>
+
+<div class="keyidea"><div class="lab">This is the “S” in ESG</div>
+<p>A governance failure did not merely lose money for sophisticated funds who knew the risks. It destroyed the savings of the financially excluded — <strong>the very people the bank had been built to serve</strong> — and kept collecting from borrowers who could least afford it. Bad governance is not an abstraction on a scorecard. It is the machinery by which a boardroom's deference becomes a poor family's ruin.</p></div>
+
+<h3 class="sec">Synthesis — six failures, one toolkit</h3>
+
+<p>Step back and the case resolves into a single, clean mapping. Each of the six failures is one of the governance levers from the morning, pulled the wrong way. Reading the table from left to right is reading African Bank; reading it from right to left is reading the entire morning lecture.</p>
+
+<div class="tablewrap"><table class="data"><caption><span class="fnum">Table 2</span>The six failures, each mapped to the governance mechanism it corresponds to. The case is not a new subject; it is this morning's toolkit, observed in the act of breaking.</caption>
+<thead><tr><th>The failure at African Bank</th><th>The governance lever (this morning)</th></tr></thead><tbody>
+<tr><td>The founder who was “always right”</td><td><b>Board independence</b> &amp; the CEO–board balance</td></tr>
+<tr><td>An unqualified, sidelined risk officer</td><td><b>Board competence</b>; the risk function</td></tr>
+<tr><td>The mono-line bet, never challenged</td><td><b>Strategy</b> oversight &amp; challenge</td></tr>
+<tr><td>R1.4bn lent to Ellerines</td><td><b>Conflicts</b> of interest / related-party deals</td></tr>
+<tr><td>Ex-auditor CFO; relentlessly upbeat disclosure</td><td><b>Audit</b> committee &amp; auditor independence</td></tr>
+<tr><td>Pay flowing from growth and dividends</td><td>Executive <b>incentives</b></td></tr>
+</tbody></table></div>
+
+<p>And the common thread? Every one of these mechanisms <em>existed.</em> The board had its independent majority, its risk committee, its audit committee, its disclosures, its remuneration structure. The single thing missing — the thing no committee can supply — was a board willing to override the founder when he was wrong. That is the sentence to carry out of the room: <strong>governance is behaviour, not structure.</strong></p>
+</section>
+
+<!-- ===================== CODA ===================== -->
+<section class="part" data-toc="In closing · the dark mirror">
+<div class="pnum">In closing</div>
+<h2>The dark mirror</h2>
+
+<p>Return, finally, to the guess you made at the start. Was it fraud? It was not. Was it a bad strategy, or poor risk management, or a failed board, or bad luck? It was, in a sense, all of them at once — but underneath each of those labels sat the same cause. The strategy went unchallenged, the risk went unowned, the conflict went unseen, the disclosure went unquestioned, and the incentives pushed the wrong way, because the board would not, in the end, govern the man who had built the bank. The platinum strikes were the trigger. The governance was the gun.</p>
+
+<p>This is why African Bank is the dark mirror of the morning. There, the governance machine — boards, votes, blockholders, incentives — was the thing that could carry environmental and social preferences into corporate action. Here the identical machine, with the identical parts, carried catastrophe instead: a dominant chief executive, a captured board, an unowned risk, a buried conflict, and the savings of thirteen thousand people who trusted that the textbook architecture meant what it appeared to mean. The lesson is not that governance failed because it was absent. It is that governance failed while fully present — on paper.</p>
+
+<blockquote class="center">Good governance is not paperwork. It is the difference between a bank and a ruin.</blockquote>
+
+<div class="consider"><div class="lab">Carry these out of the room</div>
+<p>Seven independent directors sat on that board. Why did <em>none</em> of the mechanisms fire in time? Was this fundamentally a failure of <em>strategy</em>, of <em>risk</em>, or of <em>boardroom courage</em>? The regulator was engaged from 2011 — did <em>regulation</em> fail, or did <em>governance</em> fail first? And the hardest one: should directors be held <em>personally</em> liable for negligence like this, or would that simply empty boards of anyone willing to serve? There is no single right answer. Defend a position — using the morning's framework, now that you have seen it break.</p></div>
+</section>
+
+<!-- ===================== SOURCES ===================== -->
+<section class="refs" data-toc="Sources &amp; attribution">
+<h2>Sources &amp; the toolkit behind the analysis</h2>
+<p class="note">These teaching notes are an original summary and analysis. The facts of the case are drawn from, and attributed to, the Harvard Business School case and the South African Reserve Bank's investigation; all exhibits here are redrawn as original charts. The governance mechanisms used to analyse the case are the leading economics and finance papers from the morning lecture.</p>
+<ol>
+<li><b>Paine, L. S. &amp; Hurwitz, W. (2018).</b> <i>African Bank Investments Limited (A) &amp; (B).</i> Harvard Business School Cases 319-052 &amp; 319-053. <span class="cite">— the primary case; obtained by students separately, under licence.</span></li>
+<li><b>Myburgh, J. F. (2016).</b> <i>Investigation into African Bank Limited</i> (the “Myburgh Report”). South African Reserve Bank. <span class="cite">— the official findings: negligence, not fraud.</span></li>
+<li><b>African Bank Investments Limited.</b> Annual reports, 2003–2014. <span class="cite">— source for the loan-book, profit, funding and share-price figures (redrawn, approximate).</span></li>
+<li><b>The Banker</b> (Financial Times group), November 2012. <span class="cite">— the “South African Bank of the Year” award.</span></li>
+<li>Shleifer, A. &amp; Vishny, R. W. (1997). A Survey of Corporate Governance. <i>Journal of Finance</i>, 52(2). <span class="cite">— governance as assuring a return to the suppliers of finance.</span></li>
+<li>Jensen, M. C. &amp; Meckling, W. H. (1976). Theory of the Firm: Agency Costs and Ownership Structure. <i>Journal of Financial Economics</i>, 3(4). <span class="cite">— the agency problem behind every failure above.</span></li>
+<li>Adams, R. B. &amp; Ferreira, D. (2009). Women in the Boardroom and Their Impact on Governance and Performance. <i>Journal of Financial Economics</i>, 94(2). <span class="cite">— boards monitor only when independence is behavioural.</span></li>
+<li>Bertrand, M. &amp; Mullainathan, S. (2001). Are CEOs Rewarded for Luck? The Ones Without Principals Are. <i>Quarterly Journal of Economics</i>, 116(3). <span class="cite">— pay as a symptom of weak governance (Failure 6).</span></li>
+</ol>
+</section>
+
+</article>
+
+<footer>
+<div class="big">This morning: the governance lecture. This afternoon: its dark mirror.</div>
+When the Machinery Breaks · African Bank (ABIL) · Summer ESG Module · Jae Yung Kim · 29 June 2026
+<div class="small">An original teaching summary, attributed to Paine &amp; Hurwitz, <i>African Bank Investments Limited (A) &amp; (B)</i>, HBS 319-052/053 (2018), and the Myburgh Report (SARB, 2016). All exhibits redrawn. The Harvard Business School case itself is not reproduced here; students obtain it separately under licence.</div>
+</footer>
+
+<script>
+/* ============================ CHART LIBRARY (animated SVG, theme via CSS vars) ============================ */
+const C = {
+  bars(spec){
+    const W=520,H=spec.h||300, pad={t:22,r:14,b:44,l:20};
+    const min=spec.min!=null?spec.min:0, max=spec.max;
+    const y=v=>pad.t+(max-v)/(max-min)*(H-pad.t-pad.b); const zeroY=y(0);
+    let groups=spec.groups; const slotW=(W-pad.l-pad.r)/groups.length;
+    let s=`<svg viewBox="0 0 ${W} ${H}" class="chart" role="img">`;
+    s+=`<line class="zero" x1="${pad.l}" y1="${zeroY}" x2="${W-pad.r}" y2="${zeroY}"/>`;
+    if(spec.ylabel) s+=`<text class="axlbl cpop" x="${pad.l-4}" y="${pad.t-7}">${spec.ylabel}</text>`;
+    let delay=0;
+    groups.forEach((g,gx)=>{
+      const bw=Math.min(58,(slotW-26)/g.bars.length);
+      const gx0=pad.l+slotW*gx+(slotW-bw*g.bars.length-(g.bars.length-1)*10)/2;
+      g.bars.forEach((b,bx)=>{
+        const x=gx0+bx*(bw+10); const yv=y(b.v), top=Math.min(yv,zeroY), hgt=Math.abs(yv-zeroY)||2; const pos=b.v>=0;
+        s+=`<rect class="bar ${pos?'pos':'neg'}" x="${x}" y="${top}" width="${bw}" height="${hgt}" rx="2" fill="${b.color}" style="animation-delay:${delay}s"/>`;
+        const lblY=pos?top-9:top+hgt+19;
+        s+=`<text class="vlbl cpop" x="${x+bw/2}" y="${lblY}" text-anchor="middle" fill="${b.color}" style="animation-delay:${delay+.25}s">${b.label}</text>`;
+        delay+=.12;
+      });
+      s+=`<text class="clbl cpop" x="${pad.l+slotW*gx+slotW/2}" y="${H-pad.b+26}" text-anchor="middle" style="animation-delay:${delay+.1}s">${g.label}</text>`;
+    });
+    if(spec.foot) s+=`<text class="note cpop" x="${W/2}" y="${H-6}" text-anchor="middle" fill="var(--ink-faint)" style="animation-delay:${delay+.3}s">${spec.foot}</text>`;
+    return s+`</svg>`;
+  },
+  line(spec){
+    const W=520,H=spec.h||300,pad={t:24,r:18,b:44,l:30}; const xr=spec.xr,yr=spec.yr;
+    const X=x=>pad.l+(x-xr[0])/(xr[1]-xr[0])*(W-pad.l-pad.r); const Y=y=>H-pad.b-(y-yr[0])/(yr[1]-yr[0])*(H-pad.t-pad.b);
+    let s=`<svg viewBox="0 0 ${W} ${H}" class="chart">`; const yb=Y(yr[0]);
+    s+=`<line class="ax" x1="${pad.l}" y1="${yb}" x2="${W-pad.r}" y2="${yb}"/><line class="ax" x1="${X(xr[0])}" y1="${pad.t}" x2="${X(xr[0])}" y2="${yb}"/>`;
+    if(spec.baseline!=null){const by=Y(spec.baseline);s+=`<line class="zero" x1="${pad.l}" y1="${by}" x2="${W-pad.r}" y2="${by}"/><text class="axlbl cpop" x="${pad.l+4}" y="${by-6}">baseline</text>`;}
+    if(spec.event)s+=`<text class="axlbl cpop" x="${X(0)}" y="${yb+24}" text-anchor="middle">${spec.event}</text>`;
+    if(spec.xlabel)s+=`<text class="axlbl cpop" x="${W-pad.r}" y="${yb+24}" text-anchor="end">${spec.xlabel}</text>`;
+    if(spec.ylabel)s+=`<text class="axlbl cpop" x="${pad.l-8}" y="${pad.t+2}">${spec.ylabel}</text>`;
+    const P=spec.pts.map(p=>[X(p[0]),Y(p[1])]); let d=`M ${P[0][0]} ${P[0][1]}`;
+    for(let i=0;i<P.length-1;i++){const a=P[i],b=P[i+1],mx=(a[0]+b[0])/2;d+=` C ${mx} ${a[1]} ${mx} ${b[1]} ${b[0]} ${b[1]}`;}
+    s+=`<path class="draw" d="${d}" stroke="${spec.color}" stroke-width="3.2" fill="none" stroke-linecap="round"/>`;
+    if(spec.anno)spec.anno.forEach((a,i)=>{s+=`<text class="vlbl cpop" x="${X(a.x)}" y="${Y(a.y)}" text-anchor="${a.anchor||'middle'}" fill="${a.color||spec.color}" style="animation-delay:${1+i*.15}s">${a.t}</text>`;});
+    return s+`</svg>`;
+  }
+};
+const CHARTS={
+  loanbook:()=>C.bars({h:300,max:64,min:0,ylabel:"loan book (R bn)",groups:[
+    {label:"2003",bars:[{v:6.3,label:"6.3",color:"var(--teal)"}]},
+    {label:"2007",bars:[{v:10.9,label:"10.9",color:"var(--teal)"}]},
+    {label:"2008",bars:[{v:20.9,label:"20.9",color:"var(--teal)"}]},
+    {label:"2010",bars:[{v:40,label:"40",color:"var(--teal)"}]},
+    {label:"2012",bars:[{v:52.9,label:"52.9",color:"var(--teal)"}]},
+    {label:"2013",bars:[{v:59.4,label:"59.4",color:"var(--gold)"}]}],foot:"≈ tenfold in a decade"}),
+  funding:()=>C.bars({h:300,max:86,min:0,ylabel:"% of funding",groups:[
+    {label:"African Bank",bars:[{v:72,label:"~72%",color:"var(--coral)"},{v:1,label:"~1%",color:"var(--teal)"}]},
+    {label:"Capitec (peer)",bars:[{v:77,label:"~77%",color:"var(--teal)"}]}],foot:"coral = wholesale bonds · teal = deposits"}),
+  profit:()=>C.bars({h:320,max:3.6,min:-5,ylabel:"profit (R bn)",groups:[
+    {label:"2009",bars:[{v:1.9,label:"1.9",color:"var(--teal)"}]},
+    {label:"2010",bars:[{v:1.7,label:"1.7",color:"var(--teal)"}]},
+    {label:"2011",bars:[{v:1.8,label:"1.8",color:"var(--teal)"}]},
+    {label:"2012",bars:[{v:3.1,label:"3.1",color:"var(--green)"}]},
+    {label:"2013",bars:[{v:-4.2,label:"−4.2",color:"var(--coral)"}]}],foot:"the first loss in the bank's history"}),
+  price:()=>C.line({h:300,xr:[0,11],yr:[0,44],xlabel:"2003 → 2014",ylabel:"share price (R)",color:"var(--teal)",
+    pts:[[0,3],[3,7],[5,14],[7,24],[9,40],[10,20],[10.6,6],[11,0.8]],
+    anno:[{x:9,y:43,t:"~R40",color:"var(--teal)"},{x:11,y:4.5,t:"< R1",color:"var(--coral)",anchor:"end"}]}),
+  goodbad:()=>C.bars({h:300,max:30,min:0,ylabel:"R bn (net)",groups:[
+    {label:"“good bank”",bars:[{v:26,label:"R26bn",color:"var(--green)"}]},
+    {label:"“bad book”",bars:[{v:17,label:"R17bn",color:"var(--coral)"}]}],foot:"the Reserve Bank split the bank in two"})
+};
+
+/* mount charts */
+document.querySelectorAll(".chart-slot").forEach(el=>{const k=el.dataset.chart;if(CHARTS[k])el.innerHTML=CHARTS[k]();});
+
+/* scroll reveal for figures */
+const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add("shown");io.unobserve(e.target);}});},{threshold:.2,rootMargin:"0px 0px -10% 0px"});
+document.querySelectorAll("figure").forEach(f=>io.observe(f));
+
+/* reading progress */
+const bar=document.getElementById("bar");
+function prog(){const h=document.documentElement;bar.style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+"%";}
+window.addEventListener("scroll",prog,{passive:true});prog();
+
+/* contents */
+const toc=document.getElementById("toc"),list=document.getElementById("toclist");
+const secs=[...document.querySelectorAll("[data-toc]")];
+secs.forEach((s,i)=>{s.id="s"+i;const li=document.createElement("li");li.innerHTML=`<a href="#s${i}">${s.dataset.toc}</a>`;list.appendChild(li);});
+document.getElementById("tocbtn").onclick=()=>toc.classList.add("open");
+toc.querySelector(".close").onclick=()=>toc.classList.remove("open");
+toc.addEventListener("click",e=>{if(e.target.tagName==="A"||e.target===toc)setTimeout(()=>toc.classList.remove("open"),120);});
+document.addEventListener("keydown",e=>{if(e.key==="Escape")toc.classList.remove("open");});
+
+/* QA: ?still freezes to final state, ?y scrolls */
+const _qp=new URLSearchParams(location.search);
+if(_qp.has("y")){const go=()=>window.scrollTo(0,parseInt(_qp.get("y"),10)||0);window.addEventListener("load",go);setTimeout(go,250);}
+if(_qp.has("still")){document.querySelectorAll("figure").forEach(f=>f.classList.add("shown"));
+  let st=document.createElement("style");st.textContent=".bar{transform:scaleY(1)!important;animation:none!important}.draw{stroke-dashoffset:0!important;animation:none!important}.cpop,.dot0{opacity:1!important;transform:none!important;animation:none!important}figure .chartbox{opacity:1!important;transform:none!important}";document.head.appendChild(st);}
+</script>
+</body>
+</html>
